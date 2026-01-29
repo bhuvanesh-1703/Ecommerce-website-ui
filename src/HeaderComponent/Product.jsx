@@ -117,11 +117,11 @@ const Product = () => {
                 <div className="card-body">
                   <h5 className="card-title" style={{ color: "black" }}>
                     <Link to={`/product/${pro._id}`}>
-                      <h4>{pro.productname}</h4>
+                      <h4>{(pro.productname.slice(0, 1).toUpperCase() + pro.productname.slice(1, 15).toLowerCase())}</h4>
                     </Link>
                   </h5>
 
-                  <p className="card-text" style={{ color: "black" }}>{pro.description}</p>
+                  <p className="card-text" style={{ color: "black" }}>{(pro.description.slice(0, 1).toUpperCase() + pro.description.slice(1, 100).toLowerCase()+"...")}</p>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <h5>Rs: {pro.price}</h5>
                     <button className="btn" onClick={() => postCart(pro)}>

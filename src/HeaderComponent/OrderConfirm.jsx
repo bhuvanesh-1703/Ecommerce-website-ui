@@ -24,12 +24,12 @@ const Checkout = () => {
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
   };
 
-  // ✅ Safe Cart Total
+
   const getCartTotal = async () => {
     try {
       const res = await axios.get("http://localhost:5100/cart");
 
-      // ✅ filter broken cart items
+      
       const validItems = res.data.data.filter(
         item => item.productId !== null
       );
@@ -126,7 +126,7 @@ const Checkout = () => {
             <h4>Payment Options</h4>
             <label>
               <input type="radio" value="Gpay" name="payment" onChange={(e) => setPaymentMethod(e.target.value)} />
-              Gpay
+              G pay
             </label>
             <label>
               <input type="radio" value="PhonePe" name="payment" onChange={(e) => setPaymentMethod(e.target.value)} />
