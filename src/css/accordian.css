@@ -1,0 +1,50 @@
+
+.accordion-flush {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    margin-top: 50px;
+}
+
+.accordion-button {
+    background: #56021F;
+    color: #f0eeee;
+    font-weight: 600;
+    padding: 1rem 1.25rem;
+    transition: all 0.3s ease;
+    border: none;
+    text-align: center;
+}
+
+.accordion-button:hover {
+    background: #56021F;
+    color: #ffffff;
+}
+
+.accordion-button:not(.collapsed) {
+    background: #56021F;
+    text-align: center;
+    color: #fff;
+}
+
+.accordion-body {
+    background: #fff;
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #555;
+    border-top: 1px solid #eee;
+}
+
+/* Caution Notice Styling */
+.caution-notice {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #e7e7e6;
+    border: 1px solid #ffeeba;
+    border-radius: 6px;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+}

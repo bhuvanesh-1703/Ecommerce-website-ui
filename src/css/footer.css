@@ -1,0 +1,51 @@
+.footer {
+  background-color: #56021F;
+  color: #ddd;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.footer h5 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.footer-brand {
+  color: #d6c847;
+  text-shadow:
+    0 0 10px #ebda46;
+  margin-left: 5px;
+  font-size: larger;
+  font-weight: bolder;
+}
+
+.footer-text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.footer-link {
+  color: #EDDFE0;
+  padding: 0.25rem 0;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #d6c847;
+   text-shadow:
+        0 0 2px #d6c847;
+  text-decoration: none;
+}
+
+.social-icons a {
+  color: #ddd;
+  font-size: 1.25rem;
+  margin-right: 0.75rem;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #acadad;
+  cursor: pointer;
+}

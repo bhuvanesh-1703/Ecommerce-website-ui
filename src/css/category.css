@@ -1,0 +1,111 @@
+/* ===== CATEGORY LIST ===== */
+.category-list {
+  width: 100%;
+  max-width: 280px;
+}
+
+.category-list li {
+  background: linear-gradient(135deg, #1f2933, #111827);
+  color: #f9fafb;
+  cursor: pointer;
+  margin-bottom: 10px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.category-list li:hover {
+  background: linear-gradient(135deg, #374151, #1f2933);
+  transform: translateY(-2px);
+}
+
+.category-list li.active {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.4);
+}
+
+.category-list img {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #e5e7eb;
+}
+
+/* ===== PRODUCTS GRID ===== */
+.products-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 24px;
+}
+
+/* ===== PRODUCT CARD ===== */
+.card {
+  border: none;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+}
+
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-body {
+  background-color: #f9fafb;
+  padding: 16px;
+}
+
+.card-body h5 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.card-body p {
+  font-size: 14px;
+  color: #4b5563;
+  margin-bottom: 8px;
+}
+
+.card-body p:last-of-type {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* ===== BUTTON ===== */
+.card-body .btn {
+  width: 100%;
+  background: linear-gradient(135deg, #111827, #1f2933);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 0;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.card-body .btn:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+}
+
+
+.no-products {
+  margin-left: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #6b7280;
+}

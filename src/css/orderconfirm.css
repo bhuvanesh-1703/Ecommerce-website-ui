@@ -1,0 +1,102 @@
+
+.whol {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+
+.whol > div {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+
+.cont {
+  flex: 1;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.cont input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.cont input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+
+.summary {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.summary p {
+  font-size: 15px;
+  margin: 8px 0;
+}
+
+
+.payment-option {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.payment-option input[type="radio"] {
+  margin-right: 8px;    
+  display: flex;
+}
+
+.payment-option label {
+  margin-right: 20px;
+  font-size: 14px;
+  display: flex;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+
+.bt {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #56021F;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.bt:hover {
+  background-color: #7e022e;
+}
+
+
+@media (max-width: 768px) {
+  .whol > div {
+    flex-direction: column;
+  }
+}

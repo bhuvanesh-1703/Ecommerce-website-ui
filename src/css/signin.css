@@ -1,0 +1,70 @@
+
+.containers {
+  width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+
+}
+
+/* Heading */
+.containers h1 {
+  font-size: 28px;
+  color: #56021F;
+  margin-bottom: 20px;
+}
+
+/* Form inputs */
+form input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Submit button */
+form button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background: #56021F;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+form button:hover {
+  background: #6b062a;
+}
+
+/* Error message */
+form p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: red;
+}
+
+/* Login link */
+.spanss {
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.spanss:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}

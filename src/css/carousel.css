@@ -1,0 +1,6 @@
+.carousel-item img {
+  height: 60vh;        
+  object-fit:fill;
+  width: 100%;
+  margin-top: px;
+}
