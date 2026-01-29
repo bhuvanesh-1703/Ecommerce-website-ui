@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../css/category.css";
 
 const Category = () => {
+  //const navigate = useNavigate();
+
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
@@ -24,7 +27,7 @@ const Category = () => {
     try {
       const response = await axios.get("http://localhost:5100/admin/products");
       setProducts(response.data.data);
-     // console.log("Products:", response.data.data);
+      // console.log("Products:", response.data.data);
     } catch (error) {
       console.log("Failed to fetch products", error);
     }
@@ -50,7 +53,7 @@ const Category = () => {
   return (
     <>
 
-     <ul className="category-list">
+      <ul className="category-list" style={{display:"flex",justifyContent:"space-around",}}>
 
         {categories.map((cat) => (
           <li
@@ -65,7 +68,9 @@ const Category = () => {
               borderRadius: "5px",
               display: "flex",
               alignItems: "center",
-              
+              marginLeft:"30px",
+           
+
             }}
             onClick={() => filter(cat.categoryname)}
           >
@@ -85,7 +90,7 @@ const Category = () => {
       </ul>
 
       {showProducts && (
-        <div className="products-wrapper"style={{ marginLeft: "23px" }}>
+        <div className="products-wrapper" style={{ marginLeft: "23px" }}>
           {filterProducts.length > 0 ? (
             filterProducts.map((prod) => (
               <div className="card m-2" style={{ width: "288px" }} key={prod._id}>
@@ -100,12 +105,14 @@ const Category = () => {
                   className="card-body"
                   style={{ backgroundColor: "#eee1e1ff" }}
                 >
-                  <h5 style={{ fontWeight: "bold", color: "black" }}>
-                    {prod.productname}
-                  </h5>
-                  <p style={{ color: "black" }}>{prod.description}</p>
-                  <p>Rs.{prod.price}</p>
-                  <button className="btn btn-dark">Add Cart</button>
+                  <Link to={`/product/${prod._id}`}>
+                    <h4>{(prod.productname.slice(0, 1).toUpperCase() + prod.productname.slice(1, 15).toLowerCase())}</h4>
+                  </Link>
+                  <p className="card-text" style={{ color: "black" }}>{(prod.description.slice(0, 1).toUpperCase() + prod.description.slice(1, 100).toLowerCase() + "...")}</p>
+                  <h5>Rs: {prod.price}</h5>
+                  <button className="btn" onClick={() => postCart(pro)}>
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             ))
