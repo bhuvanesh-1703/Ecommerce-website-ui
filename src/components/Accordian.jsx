@@ -10,11 +10,8 @@ function Flip() {
     return (
         <>
             <div >
-
                <Ship/>
-
                 <div className="accordion accordion-flush " id="accordionFlushExample">
-
                     <div className="accordion-item" style={{ backgroundColor: "#d6c847" }}>
                         <h2 className="accordion-header" id="headingOne">
                             <button
@@ -35,14 +32,10 @@ function Flip() {
                         >
                             <div className="accordion-body">
                                 Keep Shopping Any time
-
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-
                 <div className="caution-notice" style={{ border: "none" }}>
                     <h2> CAUTION NOTICE</h2>
                     <p>Decon is committed to your security and satisfaction. We never ask for your OTP, password, or personal details via phone or unsolicited communication.
