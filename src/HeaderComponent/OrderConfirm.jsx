@@ -8,6 +8,7 @@ const Checkout = () => {
   const [total, setTotal] = useState(0);
   const [shippingCharge, setShippingCharge] = useState(0);
   const [cartItems, setCartItems] = useState([]);
+  const [qty, setQty] = useState(1);
   const [userDetails, setUserDetails] = useState({
     fullname: "",
     address: "",
@@ -29,7 +30,7 @@ const Checkout = () => {
     try {
       const res = await axios.get("http://localhost:5100/cart");
 
-      
+
       const validItems = res.data.data.filter(
         item => item.productId !== null
       );
@@ -40,6 +41,7 @@ const Checkout = () => {
       });
 
       setCartItems(validItems);
+      setQty(validItems.reduce((acc, item) => acc + item.quantity, 0));
       setShippingCharge(sum >= 499 ? 0 : 30);
       setTotal(sum);
     } catch (error) {
@@ -85,13 +87,14 @@ const Checkout = () => {
         deliveryAddress: userDetails,
         totalPrice: total,
         shippingCharge,
+        qty,
         paymentMethod
       };
 
       await axios.post("http://localhost:5100/admin/order", orderData);
 
       Swal.fire("Success", "Order placed successfully!", "success").then(() => {
-        navigate("/orders"); // or home
+        navigate("/paymentsuccess"); // or home
       });
 
     } catch (error) {
@@ -107,18 +110,20 @@ const Checkout = () => {
       <div style={{ display: "flex", marginTop: "5%", marginBottom: "5%" }}>
         <div className="cont">
           <h4>Delivery Address</h4>
-          <input name="fullname" placeholder="Fullname" value={userDetails.fullname} onChange={handleChange} />
-          <input name="address" placeholder="Address" value={userDetails.address} onChange={handleChange} />
-          <input name="phonenumber" placeholder="Phonenumber" value={userDetails.phonenumber} onChange={handleChange} />
-          <input name="city" placeholder="City" value={userDetails.city} onChange={handleChange} />
-          <input name="pincode" placeholder="Pincode" value={userDetails.pincode} onChange={handleChange} />
-          <input name="state" placeholder="State" value={userDetails.state} onChange={handleChange} />
+          <input name="fullname" placeholder="Fullname" value={userDetails.fullname.toUpperCase()} onChange={handleChange} />
+          <input name="address" placeholder="Address" value={userDetails.address.toUpperCase()} onChange={handleChange} />
+          <input name="phonenumber" maxLength={10} placeholder="Phonenumber" value={userDetails.phonenumber} onChange={handleChange} />
+          <input name="city" placeholder="City" value={userDetails.city.toUpperCase()} onChange={handleChange} />
+          <input type="number" name="pincode" placeholder="Pincode" value={userDetails.pincode} onChange={handleChange} />
+          <input name="state" placeholder="State" value={userDetails.state.toUpperCase()} onChange={handleChange} />
         </div>
 
         <div>
           <div className="summary">
             <h4>Order Summary</h4>
-            <p>Shipping charge: <strong style={{color:"green"}}>₹ {shippingCharge === 0 ? "Free" : shippingCharge}</strong></p>
+            <p>Shipping charge: <strong style={{ color: "green" }}>₹ {shippingCharge === 0 ? "Free" : shippingCharge}</strong></p>
+            <p>Quantity: <strong >{qty}</strong></p>
+            
             <p>Total Amount: <strong>₹ {total + shippingCharge}</strong></p>
           </div>
 

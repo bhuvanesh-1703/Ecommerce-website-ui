@@ -5,6 +5,7 @@
 }
 
 .category-list li {
+  min-width: 80%;
   background: linear-gradient(135deg, #1f2933, #111827);
   color: #f9fafb;
   cursor: pointer;

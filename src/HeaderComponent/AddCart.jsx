@@ -59,6 +59,7 @@ const AddCart = () => {
     });
 
     setTotal(sum);
+    
   };
 
   // Delete Product

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/category.css";
+import Swal from "sweetalert2";
 
 const Category = () => {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -12,7 +13,7 @@ const Category = () => {
   const [activeCategory, setActiveCategory] = useState("");
   const [showProducts, setShowProducts] = useState(false);
 
-
+  // Fetch categories
   const getCat = async () => {
     try {
       const response = await axios.get("http://localhost:5100/admin/category");
@@ -22,17 +23,17 @@ const Category = () => {
     }
   };
 
-
+  // Fetch products
   const getProduct = async () => {
     try {
       const response = await axios.get("http://localhost:5100/admin/products");
       setProducts(response.data.data);
-      // console.log("Products:", response.data.data);
     } catch (error) {
       console.log("Failed to fetch products", error);
     }
   };
 
+  // Filter products by category
   const filter = (category) => {
     setActiveCategory(category);
     setShowProducts(true);
@@ -45,6 +46,49 @@ const Category = () => {
     setFilterProducts(filtered);
   };
 
+  // Add product to cart
+  const postCart = async (product) => {
+    try {
+      const userData = localStorage.getItem("userId");
+      if (!userData) {
+        Swal.fire({ title: "Login First", confirmButtonColor: "#56021F" });
+        navigate("/login");
+        return;
+      }
+
+      const userId = JSON.parse(userData);
+
+      const cart = {
+        productId: product._id,
+        userId: userId._id || userId,
+        quantity: 1,
+      };
+
+      const response = await axios.post("http://localhost:5100/cart", cart);
+
+      if (response.data.success) {
+        Swal.fire({
+          toast: true,
+          position: "top",
+          icon: "success",
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+
+        navigate("/cart");
+      }
+    } catch (error) {
+      console.error("Failed to add cart", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        text: "Failed to add product to cart.",
+      });
+    }
+  };
+
   useEffect(() => {
     getCat();
     getProduct();
@@ -52,9 +96,15 @@ const Category = () => {
 
   return (
     <>
-
-      <ul className="category-list" style={{display:"flex",justifyContent:"space-around",}}>
-
+      {/* Category List */}
+      <ul
+        className="category-list"
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          marginTop: "25px",
+        }}
+      >
         {categories.map((cat) => (
           <li
             key={cat._id}
@@ -68,9 +118,7 @@ const Category = () => {
               borderRadius: "5px",
               display: "flex",
               alignItems: "center",
-              marginLeft:"30px",
-           
-
+              marginLeft: "30px",
             }}
             onClick={() => filter(cat.categoryname)}
           >
@@ -89,11 +137,16 @@ const Category = () => {
         ))}
       </ul>
 
+      {/* Products */}
       {showProducts && (
-        <div className="products-wrapper" style={{ marginLeft: "23px" }}>
+        <div className="products-wrapper" style={{ marginLeft: "60px" }}>
           {filterProducts.length > 0 ? (
             filterProducts.map((prod) => (
-              <div className="card m-2" style={{ width: "288px" }} key={prod._id}>
+              <div
+                className="card m-2"
+                style={{ width: "288px" }}
+                key={prod._id}
+              >
                 {prod.image && (
                   <img
                     src={`http://localhost:5100/uploads/${prod.image}`}
@@ -106,18 +159,28 @@ const Category = () => {
                   style={{ backgroundColor: "#eee1e1ff" }}
                 >
                   <Link to={`/product/${prod._id}`}>
-                    <h4>{(prod.productname.slice(0, 1).toUpperCase() + prod.productname.slice(1, 15).toLowerCase())}</h4>
+                    <h4>
+                      {prod.productname.charAt(0).toUpperCase() +
+                        prod.productname.slice(1)}
+                    </h4>
                   </Link>
-                  <p className="card-text" style={{ color: "black" }}>{(prod.description.slice(0, 1).toUpperCase() + prod.description.slice(1, 100).toLowerCase() + "...")}</p>
+                  <p className="card-text" style={{ color: "black" }}>
+                    {prod.description.length > 100
+                      ? prod.description.substring(0, 100) + "..."
+                      : prod.description}
+                  </p>
                   <h5>Rs: {prod.price}</h5>
-                  <button className="btn" onClick={() => postCart(pro)}>
+                  <button className="btn" onClick={() => postCart(prod)}>
                     Add to Cart
                   </button>
                 </div>
               </div>
             ))
           ) : (
-            <p className="no-products" style={{ marginLeft: "20px", fontWeight: "bold" }}>
+            <p
+              className="no-products"
+              style={{ marginLeft: "20px", fontWeight: "bold" }}
+            >
               No products found
             </p>
           )}

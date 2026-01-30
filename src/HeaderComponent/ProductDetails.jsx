@@ -64,6 +64,7 @@ export default function ProductDetails() {
   };
 
 
+  const [quantity, setQuantity] = useState(1);
   useEffect(() => {
     getProduct();
   }, []);
@@ -73,27 +74,32 @@ export default function ProductDetails() {
       <div style={{ marginTop: "30px" }}>
         <h1>Product Details</h1>
         <div className='who'>
-          
-            <div className='cards'>
-              <img src={`http://localhost:5100/uploads/${product.image}`} alt="" />
-            </div>
-            <div className="detail">
-              <h2>{product.productname}</h2>
-              <h4>{product.description}</h4>
-              <h4><LuIndianRupee size={25} />{product.price}</h4>
-              <button style={{ marginTop: "80px" }} className='add-btns' onClick={() => postCart(product)}>
-                Add To Cart
-              </button>
 
-              <div style={{ display: "flex", marginTop: "50px" }}>
-                <div style={{ display: "flex" }}>
-                  <TfiCup size={38} /><label style={{ marginLeft: "10px" }} htmlFor="">Top Brand</label></div>
-                <div style={{ display: "flex" }}><BsCashCoin size={38} style={{ marginTop: "5px" ,marginLeft:"5px"}} /><label style={{ marginLeft: "10px" }} htmlFor="">Cash On Delivery</label></div>
-                <div style={{ display: "flex" }}> <TbTruckDelivery size={38} /><label style={{ marginLeft: "10px" }} htmlFor="">Secure Delivery</label></div>
-                <div style={{ display: "flex" }}> <GrSecure size={38} style={{ marginTop: "5px" }} /><label style={{ marginLeft: "10px" }} htmlFor="">Secure Transaction</label></div>
-              </div>
+          <div className='cards'>
+            <img src={`http://localhost:5100/uploads/${product.image}`} alt="" />
+          </div>
+          <div className="detail">
+            <h2>{product.productname}</h2>
+            <h4>{product.description}</h4>
+            <h4><LuIndianRupee size={25} />{product.price}</h4>
+            <div className="qty-controls">
+              <button onClick={() => setQuantity(quantity + 1)}>+</button>
+              <input type="number" value={quantity} readOnly />
+              <button onClick={() => quantity > 1 && setQuantity(quantity - 1)}>-</button>
             </div>
-   
+            <button style={{ marginTop: "80px" }} className='add-btns' onClick={() => postCart(product)}>
+              Add To Cart
+            </button>
+
+            <div style={{ display: "flex", marginTop: "50px" }}>
+              <div style={{ display: "flex" }}>
+                <TfiCup size={38} /><label style={{ marginLeft: "10px" }} htmlFor="">Top Brand</label></div>
+              <div style={{ display: "flex" }}><BsCashCoin size={38} style={{ marginTop: "5px", marginLeft: "5px" }} /><label style={{ marginLeft: "10px" }} htmlFor="">Cash On Delivery</label></div>
+              <div style={{ display: "flex" }}> <TbTruckDelivery size={38} /><label style={{ marginLeft: "10px" }} htmlFor="">Secure Delivery</label></div>
+              <div style={{ display: "flex" }}> <GrSecure size={38} style={{ marginTop: "5px" }} /><label style={{ marginLeft: "10px" }} htmlFor="">Secure Transaction</label></div>
+            </div>
+          </div>
+
 
           <p> <strong>Product Highlights : </strong> {product.productdetails}</p></div>
 

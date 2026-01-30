@@ -14,6 +14,7 @@ import ProductDetails from './HeaderComponent/ProductDetails'
 import UserDetails from './HeaderComponent/OrderConfirm'
 import Payment from './HeaderComponent/Payment'
 import axios from 'axios'
+import PaymentSuccess  from './HeaderComponent/Payment-Successful'
 
 export const authContext = createContext();
 
@@ -21,19 +22,44 @@ function App() {
   const [userData, setUserData] = useState(() => localStorage.getItem('userId'));
   const [cart, setCart] = useState([]);
 
+  // const getCart = async () => {
+  //   try {
+  //     const userId = localStorage.getItem('userId');
+  //     if (!userId) {
+  //       setCart([]);
+  //       return;
+  //     }
+  //     const response = await axios.get(`http://localhost:5100/cart?userId=${userId}`);
+  //     setCart(response.data.data);
+  //     console.log(response.data.data);
+
+  //   } catch (error) {
+  //     console.log('Failed to fetch cart', error);
+  //   }
+  // };
+
   const getCart = async () => {
     try {
       const userId = localStorage.getItem('userId');
       if (!userId) {
         setCart([]);
+
         return;
       }
+
       const response = await axios.get(`http://localhost:5100/cart?userId=${userId}`);
-      setCart(response.data.data);
+
+      const validItems = response.data.data.filter(
+        item => item.productId !== null
+      );
+
+      setCart(validItems);
+      // console.log(validItems);
     } catch (error) {
       console.log('Failed to fetch cart', error);
     }
   };
+
 
   useEffect(() => {
     getCart();
@@ -55,6 +81,7 @@ function App() {
             <Route path='/payment' element={<Payment />} />
             <Route path='/register' element={<SignUp />} />
             <Route path='/userdetails' element={<UserDetails />} />
+            <Route path='/paymentsuccess' element={<PaymentSuccess />} />
           </Routes>
           <Footer />
         </authContext.Provider>
