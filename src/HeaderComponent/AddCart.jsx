@@ -12,7 +12,7 @@ const AddCart = () => {
 
   const navigate = useNavigate();
 
-  // Fetch Cart
+
   const getCart = async () => {
     try {
       const userData = localStorage.getItem('userId');
@@ -24,7 +24,7 @@ const AddCart = () => {
 
       const response = await axios.get("http://localhost:5100/cart");
 
-      // Filter cart items with valid products only
+     
       const validItems = response.data.data.filter(
         item => item.productId !== null
       );
@@ -36,7 +36,6 @@ const AddCart = () => {
     }
   };
 
-  // Update Quantity
   const handleQtyChange = async (id, qty) => {
     if (qty < 1) return;
 
@@ -46,9 +45,8 @@ const AddCart = () => {
     } catch (error) {
       console.log("Failed to update quantity", error);
     }
-  };
 
-  // Calculate Total
+
   const calculateTotal = (cart) => {
     let sum = 0;
 
@@ -62,7 +60,7 @@ const AddCart = () => {
 
   };
 
-  // Delete Product
+
   const handleDeleteProduct = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -157,5 +155,6 @@ const AddCart = () => {
     </div>
   );
 };
+}
 
 export default AddCart;

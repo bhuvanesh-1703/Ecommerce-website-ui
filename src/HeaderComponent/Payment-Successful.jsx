@@ -21,7 +21,7 @@ const PaymentSuccess = () => {
             }
 
             const response = await axios.get(
-                `http://localhost:5100/admin/order?userId=${JSON.parse(userData)}`
+                `http://localhost:5100/admin/order?userId`,userData
             )
             setOrder(response.data.data)
             console.log(response.data.data)
