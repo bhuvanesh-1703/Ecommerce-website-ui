@@ -12,7 +12,6 @@ const AddCart = () => {
 
   const navigate = useNavigate();
 
-
   const getCart = async () => {
     try {
       const userData = localStorage.getItem('userId');
@@ -24,7 +23,6 @@ const AddCart = () => {
 
       const response = await axios.get("http://localhost:5100/cart");
 
-     
       const validItems = response.data.data.filter(
         item => item.productId !== null
       );
@@ -45,21 +43,17 @@ const AddCart = () => {
     } catch (error) {
       console.log("Failed to update quantity", error);
     }
-
+  };
 
   const calculateTotal = (cart) => {
     let sum = 0;
-
     cart.forEach(item => {
       if (item.productId) {
         sum += item.productId.price * item.quantity;
       }
     });
-
     setTotal(sum);
-
   };
-
 
   const handleDeleteProduct = async (id) => {
     Swal.fire({
@@ -120,9 +114,10 @@ const AddCart = () => {
 
                 <td>
                   <div className="qty-controls">
-                    <button onClick={() => handleQtyChange(pro._id, pro.quantity + 1)}>+</button>
-                    <input type="number" value={pro.quantity} readOnly />
                     <button onClick={() => handleQtyChange(pro._id, pro.quantity - 1)}>-</button>
+
+                    <input type="number" value={pro.quantity} readOnly />
+                    <button onClick={() => handleQtyChange(pro._id, pro.quantity + 1)}>+</button>
                   </div>
                 </td>
 
@@ -155,6 +150,5 @@ const AddCart = () => {
     </div>
   );
 };
-}
 
 export default AddCart;

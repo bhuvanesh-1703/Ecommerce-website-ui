@@ -5,7 +5,7 @@ import Footer from './components/Footer'
 import Contact from './HeaderComponent/Contact'
 import AboutUs from './HeaderComponent/AboutUS'
 import Product from './HeaderComponent/Product'
-import AddCart from './HeaderComponent/AddCart'
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './components/Home'
 import SignIn from './HeaderComponent/signIn'
@@ -14,7 +14,8 @@ import ProductDetails from './HeaderComponent/ProductDetails'
 import UserDetails from './HeaderComponent/OrderConfirm'
 import Payment from './HeaderComponent/Payment'
 import axios from 'axios'
-import PaymentSuccess  from './HeaderComponent/Payment-Successful'
+import PaymentSuccess from './HeaderComponent/Payment-Successful'
+import AddCart from './HeaderComponent/AddCart'
 
 export const authContext = createContext();
 
