@@ -44,6 +44,8 @@ const Checkout = () => {
       setQty(validItems.reduce((acc, item) => acc + item.quantity, 0));
       setShippingCharge(sum >= 499 ? 0 : 30);
       setTotal(sum);
+
+
     } catch (error) {
       console.log("Failed to fetch cart total", error);
     }
@@ -52,6 +54,7 @@ const Checkout = () => {
   useEffect(() => {
     getCartTotal();
   }, []);
+
 
   const handleConfirmOrder = async () => {
     if (
@@ -94,8 +97,20 @@ const Checkout = () => {
       await axios.post("http://localhost:5100/admin/order", orderData);
 
       Swal.fire("Success", "Order placed successfully!", "success").then(() => {
-        navigate("/paymentsuccess"); // or home
+
       });
+
+      await axios.post("http://localhost:5100/ordersuccessmail", {
+        toMail: parsedUser.email,
+        order: {
+          email: parsedUser.email,
+          productname: cartItems.map(i => i.productId.productname).join(", ")
+        }
+
+      })
+
+      navigate("/paymentsuccess");
+      setCartItems("");
 
     } catch (error) {
       Swal.fire("Error", "Failed to place order", "error");
@@ -123,7 +138,7 @@ const Checkout = () => {
             <h4>Order Summary</h4>
             <p>Shipping charge: <strong style={{ color: "green" }}>₹ {shippingCharge === 0 ? "Free" : shippingCharge}</strong></p>
             <p>Quantity: <strong >{qty}</strong></p>
-            
+
             <p>Total Amount: <strong>₹ {total + shippingCharge}</strong></p>
           </div>
 

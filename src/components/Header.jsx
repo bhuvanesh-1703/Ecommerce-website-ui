@@ -45,6 +45,8 @@ function Header() {
               <Nav.Link as={NavLink} to="/products" className='ilist'>Products</Nav.Link>
               <Nav.Link as={NavLink} to="/aboutus" className='ilist'>About Us</Nav.Link>
               <Nav.Link as={NavLink} to="/contact" className='ilist'>Contact</Nav.Link>
+              <Nav.Link as={NavLink} to="/userdashboard" className='ilist'>userdashboard</Nav.Link>
+
             </Nav>
             <Nav className="ms-auto">
               <Nav.Link onClick={() => navigate('/cart')} aria-label="Shopping Cart">

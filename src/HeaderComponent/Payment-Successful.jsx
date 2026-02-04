@@ -8,7 +8,7 @@ const PaymentSuccess = () => {
 
     const getOrderDetails = async () => {
         try {
-            const userData = localStorage.getItem('userId')
+            const userData = JSON.parse(localStorage.getItem('userId'))
             if (!userData) {
                 Swal.fire({
                     title: "Error!",
@@ -21,10 +21,10 @@ const PaymentSuccess = () => {
             }
 
             const response = await axios.get(
-                `http://localhost:5100/admin/order?userId`,userData
+                `http://localhost:5100/admin/order?userId=${userData}`,userData
             )
             setOrder(response.data.data)
-            console.log(response.data.data)
+            // console.log(response.data.data)
 
         } catch (error) {
             console.error("Order fetch failed:", error)
@@ -52,6 +52,8 @@ const PaymentSuccess = () => {
         return <p>No order details found.</p>
     }
 
+    
+
     return (
         <div style={{ padding: "20px", textAlign: "center" }}>
             <h2>Payment Successful!</h2>
@@ -61,7 +63,7 @@ const PaymentSuccess = () => {
                 <p><strong>Order ID:</strong> {order._id}</p>
                 <p><strong>Total Amount:</strong> ₹{order.totalPrice}</p>
                 <p><strong>Status:</strong> {order.status}</p>
-                <h4>Items:</h4>
+                
                 <ul>
                     {order.products?.map((item, index) => (
                         <li key={index}>

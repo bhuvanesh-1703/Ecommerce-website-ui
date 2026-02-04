@@ -5,7 +5,6 @@ import Footer from './components/Footer'
 import Contact from './HeaderComponent/Contact'
 import AboutUs from './HeaderComponent/AboutUS'
 import Product from './HeaderComponent/Product'
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './components/Home'
 import SignIn from './HeaderComponent/signIn'
@@ -16,6 +15,9 @@ import Payment from './HeaderComponent/Payment'
 import axios from 'axios'
 import PaymentSuccess from './HeaderComponent/Payment-Successful'
 import AddCart from './HeaderComponent/AddCart'
+import UserDashboard from './HeaderComponent/UserDashboard'
+import Orders from './UserDashboard/Orders'
+import RecentView from './UserDashboard/RecentView'
 
 export const authContext = createContext();
 
@@ -82,7 +84,10 @@ function App() {
             <Route path='/payment' element={<Payment />} />
             <Route path='/register' element={<SignUp />} />
             <Route path='/userdetails' element={<UserDetails />} />
+            <Route path='/userdashboard' element={<UserDashboard />} />
             <Route path='/paymentsuccess' element={<PaymentSuccess />} />
+            <Route path='/orders' element={<Orders />} />
+            <Route path='/recentview' element={<RecentView />} />
           </Routes>
           <Footer />
         </authContext.Provider>

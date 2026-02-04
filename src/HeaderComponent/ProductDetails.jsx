@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 
 export default function ProductDetails() {
   const id = useParams();
-  console.log(id.product_id);
+  // console.log(id.product_id);
 
   const [product, setProduct] = useState([]);
 
@@ -100,12 +100,9 @@ export default function ProductDetails() {
             </div>
           </div>
 
-
           <p> <strong>Product Highlights : </strong> {product.productdetails}</p></div>
 
       </div>
-
-
     </>
   );
 }

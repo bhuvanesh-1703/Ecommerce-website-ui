@@ -16,6 +16,7 @@ const Product = () => {
 
   const productsPerPage = 6;
 
+  
   // Fetch products
   const getProducts = async () => {
     try {
