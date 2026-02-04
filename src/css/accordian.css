@@ -1,50 +1,164 @@
+/* Modern Structured Accordion - Enhanced */
+
+.accordion-section {
+    margin: 60px auto;
+    max-width: 900px;
+    padding: 0 20px;
+}
 
 .accordion-flush {
-    border-radius: 8px;
+    max-width: 100%;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background: #fff;
-    margin-top: 50px;
+    border: 1px solid rgba(86, 2, 31, 0.1);
+    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.05);
+}
+
+.accordion-item {
+    border: none !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.accordion-item:last-child {
+    border-bottom: none !important;
 }
 
 .accordion-button {
-    background: #56021F;
-    color: #f0eeee;
-    font-weight: 600;
-    padding: 1rem 1.25rem;
-    transition: all 0.3s ease;
-    border: none;
-    text-align: center;
+    background: #ffffff !important;
+    color: #333333 !important;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 24px 32px !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease !important;
+    box-shadow: none !important;
+    position: relative;
+    border-left: 0px solid #FFD41D !important;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.accordion-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #56021f;
+    font-size: 20px;
+    flex-shrink: 0;
 }
 
 .accordion-button:hover {
-    background: #56021F;
-    color: #ffffff;
+    background: #fff9fa !important;
+    color: #56021f !important;
+}
+
+.accordion-button:hover .accordion-icon {
+    transform: scale(1.1);
 }
 
 .accordion-button:not(.collapsed) {
-    background: #56021F;
-    text-align: center;
-    color: #fff;
+    background: #fff9fa !important;
+    color: #56021f !important;
+    border-left: 6px solid #FFD41D !important;
+    padding-left: 25px !important;
+}
+
+.accordion-button::after {
+    background-size: 20px;
+    transition: transform 0.3s ease;
 }
 
 .accordion-body {
-    background: #fff;
-    padding: 1rem 1.25rem;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #555;
-    border-top: 1px solid #eee;
+    padding: 32px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555555;
+    background: #ffffff;
+    animation: slideDown 0.3s ease;
 }
 
-/* Caution Notice Styling */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Caution Notice - Premium Security Badge Style */
 .caution-notice {
-    margin-top: 2rem;
-    padding: 1rem;
-    background: #e7e7e6;
-    border: 1px solid #ffeeba;
-    border-radius: 6px;
-    color: #000000;
-    font-weight: bold;
-    text-align: center;
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 30px 40px;
+    background-color: #fdfdfd;
+    border: 1px solid #56021f;
+    border-left: 10px solid #56021f;
+    border-radius: 8px;
+    position: relative;
+    text-align: left;
+}
+
+.caution-notice h2 {
+    color: #56021f;
+    font-size: 19px;
+    font-weight: 900;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.caution-notice h2::before {
+    content: '🔒';
+    font-size: 24px;
+}
+
+.caution-notice p {
+    color: #444444;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0px;
+}
+
+@media (max-width: 768px) {
+    .accordion-button {
+        padding: 19px !important;
+        font-size: 14px;
+    }
+
+    .accordion-icon {
+        font-size: 16px;
+    }
+
+    .accordion-body {
+        padding: 20px;
+        font-size: 14px;
+    }
+
+    .caution-notice {
+        padding: 20px 25px;
+        margin: 40px auto;
+    }
+
+    .caution-notice h2 {
+        font-size: 16px;
+    }
+
+    .caution-notice p {
+        font-size: 13px;
+    }
+}
+    }
+
+    .caution-notice {
+        padding: 25px;
+        margin: 40px 15px;
+    }
 }

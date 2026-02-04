@@ -1,4 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #fcfaf2;
+    color: #333333;
+    margin: 0px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    color: #56021f;
+}
+
+.btn-primary {
+    background-color: #56021f;
+    border-color: #56021f;
+}
+
+.btn-primary:hover {
+    background-color: #3d0116;
+    border-color: #3d0116;
+}

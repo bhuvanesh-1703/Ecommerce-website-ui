@@ -18,40 +18,39 @@
 }
 
 .contact-title {
-  color: black;
+  color: #000000;
   margin-bottom: 10px;
 }
 
 .contact-subtitle {
-  color: #333;
+  color: #333333;
   margin-bottom: 15px;
 }
 
 .num {
   font-size: 16px;
-  margin: 5px 0;
+  margin: 5px 0px;
 }
 
 .touch {
   flex: 1;
   margin-left: 50px;
   padding: 20px;
-  border: 2px solid #ccc;
+  border: 2px solid #cccccc;
   border-radius: 15px;
   background-color: #fdfdfd;
   margin-right: 20px;
-  
 }
 
 .touch-title {
   text-align: center;
   margin-bottom: 20px;
-  color: black;
+  color: #000000;
 }
 
 .touch label {
   display: block;
-  margin: 10px 0 5px;
+  margin: 10px 0px 5px;
   font-weight: bold;
 }
 
@@ -59,19 +58,19 @@
   width: 100%;
   padding: 8px;
   margin-bottom: 15px;
-  border: 1px solid #aaa;
+  border: 1px solid #aaaaaa;
   border-radius: 5px;
 }
 
 .csub {
-  background-color: #56021F;
-  color: white;
+  background-color: #56021f;
+  color: #ffffff;
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s ease;
-  width: 20%  ;
+  width: 20%;
 }
 
 .csub:hover {

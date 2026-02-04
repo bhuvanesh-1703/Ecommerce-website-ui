@@ -13,7 +13,6 @@ const Category = () => {
   const [activeCategory, setActiveCategory] = useState("");
   const [showProducts, setShowProducts] = useState(false);
 
-  // Fetch categories
   const getCat = async () => {
     try {
       const response = await axios.get("http://localhost:5100/admin/category");
@@ -23,7 +22,6 @@ const Category = () => {
     }
   };
 
-  // Fetch products
   const getProduct = async () => {
     try {
       const response = await axios.get("http://localhost:5100/admin/products");
@@ -33,7 +31,6 @@ const Category = () => {
     }
   };
 
-  // Filter products by category
   const filter = (category) => {
     setActiveCategory(category);
     setShowProducts(true);
@@ -46,7 +43,6 @@ const Category = () => {
     setFilterProducts(filtered);
   };
 
-  // Add product to cart
   const postCart = async (product) => {
     try {
       const userData = localStorage.getItem("userId");
@@ -57,7 +53,6 @@ const Category = () => {
       }
 
       const userId = JSON.parse(userData);
-
       const cart = {
         productId: product._id,
         userId: userId._id || userId,
@@ -71,13 +66,11 @@ const Category = () => {
           toast: true,
           position: "top",
           icon: "success",
-          title: response.data.message,
+          title: "Added to Cart!",
           showConfirmButton: false,
           timer: 2000,
           timerProgressBar: true,
         });
-
-        navigate("/cart");
       }
     } catch (error) {
       console.error("Failed to add cart", error);
@@ -95,98 +88,67 @@ const Category = () => {
   }, []);
 
   return (
-    <>
-      {/* Category List */}
-      <ul
-        className="category-list"
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          marginTop: "25px",
-        }}
-      >
+    <div className="category-section">
+      {/* Category Pills */}
+      <ul className="category-list">
         {categories.map((cat) => (
           <li
             key={cat._id}
-            style={{
-              backgroundColor:
-                activeCategory === cat.categoryname ? "#333" : "#56021F",
-              color: "white",
-              cursor: "pointer",
-              marginBottom: "8px",
-              padding: "10px",
-              borderRadius: "5px",
-              display: "flex",
-              alignItems: "center",
-              marginLeft: "30px",
-            }}
+            className={`category-item ${activeCategory === cat.categoryname ? 'active' : ''}`}
             onClick={() => filter(cat.categoryname)}
           >
             <img
               src={`http://localhost:5100/uploads/${cat.image}`}
               alt={cat.categoryname}
-              style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "10px",
-                marginRight: "10px",
-              }}
             />
-            {cat.categoryname}
+            <span>{cat.categoryname}</span>
           </li>
         ))}
       </ul>
 
-      {/* Products */}
+      {/* Products Grid */}
       {showProducts && (
-        <div className="products-wrapper" style={{ marginLeft: "60px" }}>
+        <div className="products-wrapper">
           {filterProducts.length > 0 ? (
             filterProducts.map((prod) => (
-              <div
-                className="card m-2"
-                style={{ width: "288px" }}
-                key={prod._id}
-              >
-                {prod.image && (
-                  <img
-                    src={`http://localhost:5100/uploads/${prod.image}`}
-                    className="card-img-top"
-                    alt={prod.productname}
-                  />
-                )}
-                <div
-                  className="card-body"
-                  style={{ backgroundColor: "#eee1e1ff" }}
-                >
-                  <Link to={`/product/${prod._id}`}>
-                    <h4>
-                      {prod.productname.charAt(0).toUpperCase() +
-                        prod.productname.slice(1)}
-                    </h4>
+              <div className="product-card" key={prod._id}>
+                <div className="product-image-container">
+                  {prod.image && (
+                    <img
+                      src={`http://localhost:5100/uploads/${prod.image}`}
+                      className="product-image"
+                      alt={prod.productname}
+                    />
+                  )}
+                  <div className="card-overlay">
+                    <span className="badge-new">Maroon Select</span>
+                  </div>
+                </div>
+
+                <div className="product-details">
+                  <Link to={`/product/${prod._id}`} className="product-title">
+                    {prod.productname.charAt(0).toUpperCase() + prod.productname.slice(1)}
                   </Link>
-                  <p className="card-text" style={{ color: "black" }}>
-                    {prod.description.length > 100
-                      ? prod.description.substring(0, 100) + "..."
-                      : prod.description}
+                  <p className="product-desc">
+                    {prod.description}
                   </p>
-                  <h5>Rs: {prod.price}</h5>
-                  <button className="btn" onClick={() => postCart(prod)}>
-                    Add to Cart
-                  </button>
+                  <div className="price-row">
+                    <span className="price-tag">₹{prod.price}</span>
+                    <button className="add-btn" onClick={() => postCart(prod)}>
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
             ))
           ) : (
-            <p
-              className="no-products"
-              style={{ marginLeft: "20px", fontWeight: "bold" }}
-            >
-              No products found
-            </p>
+            <div className="no-products">
+              <p>No products found in this category yet.</p>
+            </div>
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

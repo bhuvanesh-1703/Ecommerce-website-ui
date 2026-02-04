@@ -1,51 +1,75 @@
 import React from "react";
 import '../css/accordian.css'
-import { TbTruckDelivery } from "react-icons/tb";
-import { FaShippingFast } from "react-icons/fa";
-import { MdOutlineLocalShipping } from "react-icons/md";
-import { BiSolidOffer } from "react-icons/bi";
-import { RiCustomerService2Fill } from "react-icons/ri";
 import Ship from "../HeaderComponent/accordion-Ship";
+
 function Flip() {
     return (
-        <>
-            <div >
-               <Ship/>
-                <div className="accordion accordion-flush " id="accordionFlushExample">
-                    <div className="accordion-item" style={{ backgroundColor: "#d6c847" }}>
-                        <h2 className="accordion-header" id="headingOne">
-                            <button
-                                className="accordion-button collapsed"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne"
-                                aria-expanded="false"
-                                aria-controls="flush-collapseOne"
-                            >
-                                Our advices
-                            </button>
-                        </h2>
-                        <div
-                            id="flush-collapseOne"
-                            className="accordion-collapse collapse"
-                            data-bs-parent="#accordionFlushExample"
+        <div className="accordion-page-container">
+            <Ship />
+
+            <div className="accordion accordion-flush" id="accordionFlushExample">
+                <div className="accordion-item">
+                    <h2 className="accordion-header" id="headingOne">
+                        <button
+                            className="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseOne"
                         >
-                            <div className="accordion-body">
-                                Keep Shopping Any time
-                            </div>
+                            Exclusive Design Advice
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseOne"
+                        className="accordion-collapse collapse"
+                        aria-labelledby="headingOne"
+                        data-bs-parent="#accordionFlushExample"
+                    >
+                        <div className="accordion-body">
+                            Our designers recommend pairing dark wood textures with neutral walls to create a
+                            timeless, premium atmosphere. Keep your shopping experience smooth and inspired.
                         </div>
                     </div>
                 </div>
-                <div className="caution-notice" style={{ border: "none" }}>
-                    <h2> CAUTION NOTICE</h2>
-                    <p>Decon is committed to your security and satisfaction. We never ask for your OTP, password, or personal details via phone or unsolicited communication.
 
-                        If you receive such a request, do not share any information. We also do not require payments for contests, lucky draws, or promotions outside our official platform.
-
-                        For accurate information, refer to our official website or verified social media. This message is for your safety and public interest.</p>
+                <div className="accordion-item">
+                    <h2 className="accordion-header" id="headingTwo">
+                        <button
+                            className="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseTwo"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseTwo"
+                        >
+                            Quality Guarantee
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseTwo"
+                        className="accordion-collapse collapse"
+                        aria-labelledby="headingTwo"
+                        data-bs-parent="#accordionFlushExample"
+                    >
+                        <div className="accordion-body">
+                            Every piece of furniture from DECON undergoes rigorous quality testing to ensure
+                            durability and aesthetic perfection for your home.
+                        </div>
+                    </div>
                 </div>
             </div>
-        </>
+
+            <div className="caution-notice">
+                <h2>Caution Notice</h2>
+                <p>
+                    Decon is committed to your security. We never ask for your OTP, password, or
+                    personal details via phone. Payments are only processed through our official
+                    encrypted platform. Stay safe and shop with confidence.
+                </p>
+            </div>
+        </div>
     );
 }
 

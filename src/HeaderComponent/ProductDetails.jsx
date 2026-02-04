@@ -67,7 +67,27 @@ export default function ProductDetails() {
   const [quantity, setQuantity] = useState(1);
   useEffect(() => {
     getProduct();
-  }, []);
+
+    // Tracking recently viewed
+    if (id.product_id) {
+      const saveRecentlyViewed = () => {
+        const stored = localStorage.getItem('recentlyViewed');
+        let list = stored ? JSON.parse(stored) : [];
+
+        // Remove if already exists to move to top
+        list = list.filter(item => item !== id.product_id);
+
+        // Add to front
+        list.unshift(id.product_id);
+
+        // Keep only last 10
+        if (list.length > 10) list = list.slice(0, 10);
+
+        localStorage.setItem('recentlyViewed', JSON.stringify(list));
+      };
+      saveRecentlyViewed();
+    }
+  }, [id.product_id]);
 
   return (
     <>

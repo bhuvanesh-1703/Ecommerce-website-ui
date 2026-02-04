@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import '../css/Product.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../css/Product.css";
 import { BsFilterLeft } from "react-icons/bs";
-import { useNavigate, Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { useNavigate, Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Product = () => {
   const navigate = useNavigate();
@@ -13,18 +13,22 @@ const Product = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState("newest");
 
   const productsPerPage = 6;
 
-  
   // Fetch products
   const getProducts = async () => {
     try {
       const response = await axios.get("http://localhost:5100/admin/products");
       setProducts(response.data.data);
     } catch (error) {
-      console.error('Failed to fetch products', error);
-      Swal.fire({ icon: "error", title: "Oops!", text: "Failed to load products." });
+      console.error("Failed to fetch products", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        text: "Failed to load products.",
+      });
     } finally {
       setLoading(false);
     }
@@ -33,7 +37,7 @@ const Product = () => {
   // Add to cart
   const postCart = async (product) => {
     try {
-      const userData = localStorage.getItem('userId');
+      const userData = localStorage.getItem("userId");
       if (!userData) {
         Swal.fire({ title: "Login First", confirmButtonColor: "#56021F" });
         navigate("/login");
@@ -45,7 +49,7 @@ const Product = () => {
       const cart = {
         productId: product._id,
         userId: userId._id || userId,
-        quantity: 1
+        quantity: 1,
       };
 
       const response = await axios.post("http://localhost:5100/cart", cart);
@@ -58,26 +62,42 @@ const Product = () => {
           title: response.data.message,
           showConfirmButton: false,
           timer: 2000,
-          timerProgressBar: true
+          timerProgressBar: true,
         });
 
-        navigate('/cart');
+        navigate("/cart");
       }
     } catch (error) {
       console.error("Failed to add cart", error);
-      Swal.fire({ icon: "error", title: "Oops!", text: "Failed to add product to cart." });
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        text: "Failed to add product to cart.",
+      });
     }
   };
 
   // Filter products
-  const filteredProducts = products.filter((pro) =>
-    pro.productname.toLowerCase().includes(searchTerm.toLowerCase())
+  let filteredProducts = products.filter((pro) =>
+    pro.productname.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+
+  // Simple sorting
+  if (sortBy === "price-low") {
+    filteredProducts.sort((a, b) => a.price - b.price);
+  } else if (sortBy === "price-high") {
+    filteredProducts.sort((a, b) => b.price - a.price);
+  } else if (sortBy === "newest") {
+    filteredProducts.reverse();
+  }
 
   // Pagination logic
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct,
+  );
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   useEffect(() => {
@@ -86,30 +106,71 @@ const Product = () => {
 
   return (
     <>
-      <h1 className='head' style={{ textAlign: "center", marginTop: "30px", marginBottom: "30px" }}>
+      <h1
+        className="head"
+        style={{ textAlign: "center", marginTop: "30px", marginBottom: "30px" }}
+      >
         Our Products
       </h1>
 
-      <div style={{ display: "flex", justifyContent: "space-around", margin: "20px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          margin: "20px",
+          gap: "15px",
+          flexWrap: "wrap",
+        }}
+      >
         <input
           type="search"
           placeholder="Search Product"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ paddingLeft: "10px" }}
+          style={{ paddingLeft: "10px", padding: "10px", minWidth: "200px" }}
         />
-        <h3 className='head3' style={{ border: "1px solid black", padding: "5px", cursor: "pointer" }}>
-          filter <BsFilterLeft />
-        </h3>
+
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          style={{
+            padding: "10px",
+            borderRadius: "4px",
+            border: "1px solid #ccc",
+            cursor: "pointer",
+            minWidth: "160px",
+          }}
+        >
+          <option value="newest">Newest</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+        </select>
       </div>
 
       {loading ? (
-        <p style={{ textAlign: "center", color: "gray" }}>Loading products...</p>
+        <p style={{ textAlign: "center", color: "gray" }}>
+          Loading products...
+        </p>
       ) : (
-        <div className='whole' style={{ display: 'flex', flexWrap: 'wrap', gap: "50px", marginLeft: "5%" }}>
+        <div
+          className="whole"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "50px",
+            marginLeft: "5%",
+          }}
+        >
           {filteredProducts.length > 0 ? (
             currentProducts.map((pro) => (
-              <div className="card" key={pro._id} style={{ width: "18rem", backgroundColor: "rgb(253, 253, 253)" }}>
+              <div
+                className="card"
+                key={pro._id}
+                style={{
+                  width: "18rem",
+                  backgroundColor: "rgb(253, 253, 253)",
+                }}
+              >
                 <img
                   src={`http://localhost:5100/uploads/${pro.image}`}
                   alt={pro.productname}
@@ -118,12 +179,25 @@ const Product = () => {
                 <div className="card-body">
                   <h5 className="card-title" style={{ color: "black" }}>
                     <Link to={`/product/${pro._id}`}>
-                      <h4>{(pro.productname.slice(0, 1).toUpperCase() + pro.productname.slice(1, 15).toLowerCase())}</h4>
+                      <h4>
+                        {pro.productname.slice(0, 1).toUpperCase() +
+                          pro.productname.slice(1, 15).toLowerCase()}
+                      </h4>
                     </Link>
                   </h5>
 
-                  <p className="card-text" style={{ color: "black" }}>{(pro.description.slice(0, 1).toUpperCase() + pro.description.slice(1, 100).toLowerCase()+"...")}</p>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <p className="card-text" style={{ color: "black" }}>
+                    {pro.description.slice(0, 1).toUpperCase() +
+                      pro.description.slice(1, 100).toLowerCase() +
+                      "..."}
+                  </p>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
                     <h5>Rs: {pro.price}</h5>
                     <button className="btn" onClick={() => postCart(pro)}>
                       Add to Cart
@@ -140,17 +214,37 @@ const Product = () => {
 
       {totalPages > 1 && (
         <nav>
-          <ul className="pagination"  style={{justifyContent:'center'}}>
+          <ul className="pagination" style={{ justifyContent: "center" }}>
             <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-              <button className="page-link" onClick={() => setCurrentPage(currentPage - 1)}>&laquo;</button>
+              <button
+                className="page-link"
+                onClick={() => setCurrentPage(currentPage - 1)}
+              >
+                &laquo;
+              </button>
             </li>
             {[...Array(totalPages)].map((_, i) => (
-              <li key={i} className={`page-item ${currentPage === i + 1 ? "active" : ""}`}>
-                <button className="page-link" onClick={() => setCurrentPage(i + 1)}>{i + 1}</button>
+              <li
+                key={i}
+                className={`page-item ${currentPage === i + 1 ? "active" : ""}`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => setCurrentPage(i + 1)}
+                >
+                  {i + 1}
+                </button>
               </li>
             ))}
-            <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-              <button className="page-link" onClick={() => setCurrentPage(currentPage + 1)}>&raquo;</button>
+            <li
+              className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}
+            >
+              <button
+                className="page-link"
+                onClick={() => setCurrentPage(currentPage + 1)}
+              >
+                &raquo;
+              </button>
             </li>
           </ul>
         </nav>

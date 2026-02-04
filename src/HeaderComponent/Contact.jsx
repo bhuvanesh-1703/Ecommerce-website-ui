@@ -6,7 +6,7 @@ const Contact = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
-  const handledata = () => { 
+  const handledata = () => {
     alert(`Name: ${name}\nPhone: ${phone}\nEmail: ${email}, 'Required ?'`);
   };
 
@@ -14,10 +14,12 @@ const Contact = () => {
     <div className="contact-container">
       <div className="contact-info">
         <h1 className="contact-title">Contact Us</h1>
-        <h2 className="contact-subtitle">DECON</h2>
-        <p className="num">Phone : 983476998</p>
-        <p className="num">Rajapalayam</p>
-        <p className="num">Decon@gmail.com</p>
+        <h2 className="contact-subtitle">DECON FURNITURE</h2>
+        <div className="info-item">
+          <p className="num">📍 Rajapalayam, Tamil Nadu</p>
+          <p className="num">📞 +91 98347 69980</p>
+          <p className="num">✉️ info.decon@gmail.com</p>
+        </div>
       </div>
 
       <div className="touch">
@@ -25,21 +27,21 @@ const Contact = () => {
         <label>Name</label>
         <input
           type="text"
-          name="name"
+          placeholder="Enter your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <label>Phone No</label>
         <input
           type="number"
-          name="phone"
+          placeholder="Enter mobile number"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
         <label>Email</label>
         <input
           type="email"
-          name="email"
+          placeholder="Enter email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
