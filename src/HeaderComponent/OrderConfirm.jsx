@@ -109,8 +109,8 @@ const Checkout = () => {
 
       })
 
-      navigate("/paymentsuccess");
-      setCartItems("");
+      navigate("/");
+      setCartItems([]);
 
     } catch (error) {
       Swal.fire("Error", "Failed to place order", "error");

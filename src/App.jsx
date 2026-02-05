@@ -13,14 +13,13 @@ import ProductDetails from './HeaderComponent/ProductDetails'
 import UserDetails from './HeaderComponent/OrderConfirm'
 import Payment from './HeaderComponent/Payment'
 import axios from 'axios'
-import PaymentSuccess from './HeaderComponent/Payment-Successful'
+
 import AddCart from './HeaderComponent/AddCart'
 import UserDashboard from './HeaderComponent/UserDashboard'
 import Orders from './UserDashboard/Orders'
 
-
 export const authContext = createContext();
-
+ 
 function App() {
   const [userData, setUserData] = useState(() => localStorage.getItem('userId'));
   const [cart, setCart] = useState([]);
@@ -85,7 +84,7 @@ function App() {
             <Route path='/register' element={<SignUp />} />
             <Route path='/userdetails' element={<UserDetails />} />
             <Route path='/userdashboard' element={<UserDashboard />} />
-            <Route path='/paymentsuccess' element={<PaymentSuccess />} />
+    
             <Route path='/orders' element={<Orders />} />
          
           </Routes>

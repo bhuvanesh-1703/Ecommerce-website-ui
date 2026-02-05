@@ -111,10 +111,7 @@
     border-radius: 6px;
 }
 
-.login-link:hover {
-    background-color: #FFD41D;
-    color: #56021f !important;
-}
+
 
 /* Mobile Adjustments */
 @media (max-width: 991px) {

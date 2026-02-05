@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../css/Product.css";
-import { BsFilterLeft } from "react-icons/bs";
 import { useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -12,10 +11,7 @@ const Product = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState("newest");
-
-  const productsPerPage = 6;
 
   // Fetch products
   const getProducts = async () => {
@@ -34,7 +30,6 @@ const Product = () => {
     }
   };
 
-  // Add to cart
   const postCart = async (product) => {
     try {
       const userData = localStorage.getItem("userId");
@@ -77,12 +72,11 @@ const Product = () => {
     }
   };
 
-  // Filter products
+  // Filtering + sorting
   let filteredProducts = products.filter((pro) =>
-    pro.productname.toLowerCase().includes(searchTerm.toLowerCase()),
+    pro.productname.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Simple sorting
   if (sortBy === "price-low") {
     filteredProducts.sort((a, b) => a.price - b.price);
   } else if (sortBy === "price-high") {
@@ -90,15 +84,6 @@ const Product = () => {
   } else if (sortBy === "newest") {
     filteredProducts.reverse();
   }
-
-  // Pagination logic
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct,
-  );
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   useEffect(() => {
     getProducts();
@@ -162,13 +147,13 @@ const Product = () => {
           }}
         >
           {filteredProducts.length > 0 ? (
-            currentProducts.map((pro) => (
+            filteredProducts.map((pro) => (
               <div
                 className="card"
                 key={pro._id}
                 style={{
                   width: "18rem",
-                  backgroundColor: "rgb(253, 253, 253)",
+                  backgroundColor: "rgb(255, 255, 255)",
                 }}
               >
                 <img
@@ -180,8 +165,7 @@ const Product = () => {
                   <h5 className="card-title" style={{ color: "black" }}>
                     <Link to={`/product/${pro._id}`}>
                       <h4>
-                        {pro.productname.slice(0, 1).toUpperCase() +
-                          pro.productname.slice(1, 15).toLowerCase()}
+                        {pro.productname.slice(0, 1).toUpperCase() + pro.productname.slice(1, 15).toLowerCase()}
                       </h4>
                     </Link>
                   </h5>
@@ -210,44 +194,6 @@ const Product = () => {
             <p style={{ marginLeft: "5%", color: "gray" }}>No products found</p>
           )}
         </div>
-      )}
-
-      {totalPages > 1 && (
-        <nav>
-          <ul className="pagination" style={{ justifyContent: "center" }}>
-            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-              <button
-                className="page-link"
-                onClick={() => setCurrentPage(currentPage - 1)}
-              >
-                &laquo;
-              </button>
-            </li>
-            {[...Array(totalPages)].map((_, i) => (
-              <li
-                key={i}
-                className={`page-item ${currentPage === i + 1 ? "active" : ""}`}
-              >
-                <button
-                  className="page-link"
-                  onClick={() => setCurrentPage(i + 1)}
-                >
-                  {i + 1}
-                </button>
-              </li>
-            ))}
-            <li
-              className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}
-            >
-              <button
-                className="page-link"
-                onClick={() => setCurrentPage(currentPage + 1)}
-              >
-                &raquo;
-              </button>
-            </li>
-          </ul>
-        </nav>
       )}
     </>
   );

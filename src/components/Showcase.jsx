@@ -13,7 +13,7 @@ const Showcase = () => {
                     />
                 </div>
                 <div className="showcase-content-box">
-                    <span className="showcase-badge">The Artisanal Series</span>
+                    <span className="showcase-badge">The Decon Shop</span>
                     <h2 className="showcase-title">Sculpted For Distinction</h2>
                     <p className="showcase-text">
                         Every piece in our new collection is a testament to timeless design

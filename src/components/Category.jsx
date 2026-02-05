@@ -120,9 +120,7 @@ const Category = () => {
                       alt={prod.productname}
                     />
                   )}
-                  <div className="card-overlay">
-                    <span className="badge-new">Maroon Select</span>
-                  </div>
+                
                 </div>
 
                 <div className="product-details">

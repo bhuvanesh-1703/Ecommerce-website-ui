@@ -28,44 +28,42 @@ function Header() {
 
   return (
     <>
-    <Navbar className='header' variant="dark" expand="lg">
-      <Container className='header-container'>
-        <Navbar.Brand className='brand-icon' onClick={() => navigate('/')}
-          style={{ cursor: 'pointer' }}
-        >
-          <img src={logo} style={{ width: "50px", fontWeight: "bold" }} alt="Logo" />
+      <Navbar className='header' variant="dark" expand="lg">
+        <Container className='header-container'>
+          <Navbar.Brand className='brand-icon' onClick={() => navigate('/')}
+            style={{ cursor: 'pointer' }}
+          >
+            <img src={logo} style={{ width: "50px", fontWeight: "bold" }} alt="Logo" />
 
-          <NavbarText className='brand'>Decon</NavbarText>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className='list'>
-          <Nav className="mx-auto">
-            <Nav.Link as={NavLink} to="/" className='ilist'>Home</Nav.Link>
-            <Nav.Link as={NavLink} to="/products" className='ilist'>Products</Nav.Link>
-            <Nav.Link as={NavLink} to="/aboutus" className='ilist'>About Us</Nav.Link>
-            <Nav.Link as={NavLink} to="/contact" className='ilist'>Contact</Nav.Link>
-          </Nav>
-          <Nav className="ms-auto right-nav">
-            <Nav.Link onClick={() => navigate('/cart')} className="cart-icon-link" aria-label="Shopping Cart">
-              <HiShoppingCart className="cart-icon" />
-              <span className="cart-badge">{cart.length}</span>
-            </Nav.Link>
+            <NavbarText className='brand'>Decon</NavbarText>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav" className='list'>
+            <Nav className="mx-auto">
+              <Nav.Link as={NavLink} to="/" className='ilist'>Home</Nav.Link>
+              <Nav.Link as={NavLink} to="/products" className='ilist'>Products</Nav.Link>
+              <Nav.Link as={NavLink} to="/aboutus" className='ilist'>About Us</Nav.Link>
+              <Nav.Link as={NavLink} to="/contact" className='ilist'>Contact</Nav.Link>
+            </Nav>
+            <Nav className="ms-auto right-nav">
+              <Nav.Link onClick={() => navigate('/cart')} className="cart-icon-link" aria-label="Shopping Cart">
+                <HiShoppingCart className="cart-icon" />
+                <span className="cart-badge">{cart.length}</span>
+              </Nav.Link>
 
-            {localData ? (
-              <>
+              {localData ?(
                 <Nav.Link onClick={() => navigate('/userdashboard')} className="username-link">
                   {localData.username}
                 </Nav.Link>
-              </>
-            ) : (
+             ):(
+
               <Nav.Link onClick={() => navigate('/login')} className="login-link">
                 Login / Register
-              </Nav.Link>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+              </Nav.Link> )}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
     </>
   );
