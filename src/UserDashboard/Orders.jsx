@@ -6,90 +6,87 @@ import { FiMapPin, FiTruck } from 'react-icons/fi';
 const Orders = () => {
   const [orders, setOrders] = useState([]);
 
-
   const getOrders = async () => {
     try {
       const response = await axios.get("http://localhost:5100/admin/order");
-      console.log(response.data.data);
 
-      const currentUserId = localStorage.getItem("userId");
-      console.log(currentUserId);
+      const storedUser = JSON.parse(localStorage.getItem("userId"));
+      const currentUserId = storedUser._id;
 
-      const userOrders = response.data.data.filter(order => {
-        const orderUserId = order.userId._id;
-        console.log(orderUserId);
+      const userOrders = response.data.data.filter(
+        order => order.userId?._id?.toString() === currentUserId
+      );
 
-        if (currentUserId && orderUserId === currentUserId) {
-          return true
-        }
-      });
- 
       setOrders(userOrders);
-      console.log("userOrders", userOrders);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
 
-  } catch (error) {
-    console.error("Error fetching orders:", error);
-  }
-};
+  useEffect(() => {
+    getOrders();
+  }, []);
 
-useEffect(() => {
-  getOrders();
-}, []);
+  return (
+    <>
+      {orders.length > 0 ? (
+        <div className="orders-section">
+          <div className="dashboard-header">
+            <h1>My Orders</h1>
+          </div>
 
+          <div className="orders-list">
+            {orders.map((order, index) => (
+              <div key={order._id || index} className="order-card">
+                
+                <div className="order-header">
+                  <span className="order-date">
+                    {new Date(order.date).toLocaleDateString()}
+                  </span>
+                </div>
 
-return (
-  <>
-    {orders.length > 0 ? (
-      <div className="orders-section">
-        <div className="dashboard-header">
-          <h1>My Orders</h1>
-        </div>
+                <div className="order-details">
+                  <div className="order-info">
+                    <h3 className="order-title">
+                      <span>Product Name: </span>
+                      {order.products?.[0]?.productId?.productname || 'Product'}
+                    </h3>
 
-        <div className="orders-list">
-          {orders.map((order, index) => (
-            <div key={index} className="order-card">
-              <div className="order-header">
-                <span style={{ color: '#56021f', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                  {new Date(order.date).toLocaleDateString()}
-                </span>
-              </div>
-
-              <div className="order-details">
-                <div className="order-info">
-                  <h3 style={{ fontSize: '1.1rem', marginBottom: '8px' }}>
-                    <span style={{ fontWeight: 400, color: '#56021f' }}>Product Name: </span>
-                    {order.productId?.productname || order.products?.[0]?.productId?.productname || 'E-commerce Product'}
-                  </h3>
-                  <p style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                    <FiMapPin size={14} /> {order.deliveryAddress?.city}, {order.deliveryAddress?.state}
-                  </p>
-                  <p style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                    <FiTruck size={14} /> {order.paymentMethod}
-                  </p>
-                  {order.products && order.products.length > 0 && (
-                    <p style={{ fontSize: '0.85rem' }}>
-                      Qty: {order.products[0].quantity}
+                    <p className="order-text">
+                      <FiMapPin size={14} />
+                      {order.deliveryAddress?.city}, {order.deliveryAddress?.state}
                     </p>
-                  )}
-                  <p>Status: <strong>{order.status || 'Pending'}</strong></p>
+
+                    <p className="order-text">
+                      <FiTruck size={14} />
+                      {order.paymentMethod}
+                    </p>
+
+                    <p className="order-text">
+                      Qty: {order.products?.[0]?.quantity}
+                    </p>
+
+                    <p className="order-text">
+                      Status: <strong>{order.status}</strong>
+                    </p>
+                  </div>
+
+                  <div className="order-price">
+                    ₹{order.totalPrice}
+                  </div>
                 </div>
 
-                <div className="order-price">
-                  ₹{order.totalPrice}
-                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    ) : (
-      <div style={{ textAlign: 'center', padding: '40px' }}>
-        <h2 style={{ marginTop: '20px', color: '#56021f' }}>No orders found</h2>
-      </div>
-    )}
-  </>
-);
-
+      ) : (
+        <div className="no-orders">
+          <h2>No orders found</h2>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default Orders;
