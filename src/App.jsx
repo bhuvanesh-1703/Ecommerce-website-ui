@@ -19,7 +19,7 @@ import UserDashboard from './HeaderComponent/UserDashboard'
 import Orders from './UserDashboard/Orders'
 
 export const authContext = createContext();
- 
+
 function App() {
   const [userData, setUserData] = useState(() => localStorage.getItem('userId'));
   const [cart, setCart] = useState([]);
@@ -84,9 +84,9 @@ function App() {
             <Route path='/register' element={<SignUp />} />
             <Route path='/userdetails' element={<UserDetails />} />
             <Route path='/userdashboard' element={<UserDashboard />} />
-    
+
             <Route path='/orders' element={<Orders />} />
-         
+
           </Routes>
           <Footer />
         </authContext.Provider>
