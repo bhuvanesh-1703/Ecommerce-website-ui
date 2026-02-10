@@ -42,12 +42,8 @@ function App() {
 
   const getCart = async () => {
     try {
-      const userId = localStorage.getItem('userId');
-      if (!userId) {
-        setCart([]);
-
-        return;
-      }
+      const storedUser = localStorage.getItem('userId');
+      const userId = JSON.parse(storedUser)._id || JSON.parse(storedUser);
 
       const response = await axios.get(`http://localhost:5100/cart?userId=${userId}`);
 

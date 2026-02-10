@@ -14,14 +14,12 @@ const AddCart = () => {
 
   const getCart = async () => {
     try {
-      const userData = localStorage.getItem('userId');
-      if (!userData) {
-        setCartItems([]);
-        setTotal(0);
-        return;
-      }
+      const storedUser = JSON.parse(localStorage.getItem('userId'));
+      const userId = storedUser._id 
+      console.log("userId",userId);
+      
 
-      const response = await axios.get("http://localhost:5100/cart");
+      const response = await axios.get(`http://localhost:5100/cart?userId=${userId}`);
 
       const validItems = response.data.data.filter(
         item => item.productId !== null
@@ -110,7 +108,7 @@ const AddCart = () => {
                   />
                 </td>
 
-                <td>{pro.productId.productname}</td>
+                <td>{pro.productId.productname.toUpperCase()  }</td>
 
                 <td>
                   <div className="qty-controls">

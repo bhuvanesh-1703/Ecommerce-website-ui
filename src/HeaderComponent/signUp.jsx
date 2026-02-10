@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import '../css/signin.css';
+import Swal from 'sweetalert2';
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -20,18 +21,20 @@ const SignUp = () => {
         setInput({ ...input, [e.target.name]: e.target.value });
     };
 
+    const getUser = async () => {
+        const response = await axios.get("http://localhost:5100/admin/users");
+        console.log(response.data);
 
-   
+    }
+
     const handleSignUp = async (e) => {
         e.preventDefault();
-      
-        const { username, email, phonenumber, password, confirmpassword } = input;
 
+        const { username, email, phonenumber, password, confirmpassword } = input;
 
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const phonenumberRegex = /^\d{10}$/;
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
+        const passwordRegex = /^.{6,}$/;
 
         if (!username || !email || !phonenumber || !password || !confirmpassword) {
             setErrMsg('All fields are required');
@@ -42,11 +45,11 @@ const SignUp = () => {
             return;
         }
         if (!phonenumberRegex.test(phonenumber)) {
-            setErrMsg('Enter 10 Numbers');
+            setErrMsg('Enter 10 digit phone number');
             return;
         }
         if (!passwordRegex.test(password)) {
-            setErrMsg('Password must be at least 8 characters, with uppercase, lowercase, number & special char');
+            setErrMsg('Password must be at least 6 characters');
             return;
         }
         if (password !== confirmpassword) {
@@ -61,12 +64,16 @@ const SignUp = () => {
                 username,
                 email,
                 phonenumber,
-                password,
-                confirmpassword
+                password
             });
 
             if (response.data.success) {
-                alert("Registered Successfully");
+                Swal.fire({
+                    title: "Success",
+                    text: "Registered Successfully",
+                    icon: "success",
+                    confirmButtonColor: "#56021F"
+                });
                 setInput({
                     username: "",
                     email: "",
@@ -74,11 +81,17 @@ const SignUp = () => {
                     password: "",
                     confirmpassword: ""
                 });
+                await axios.post("http://localhost:5100/registersuccessmail", {
+                    toMail: email,
+                    register: { email }  
+                });
+
                 navigate("/login");
             }
         } catch (error) {
-                setErrMsg(error.response.data.message);
-          
+            console.error("Sign up error:", error);
+            const message = error.response.data.message || "User already exists ";
+            setErrMsg(message);
         }
     };
 
@@ -88,12 +101,12 @@ const SignUp = () => {
             <form onSubmit={handleSignUp}>
                 <input type="text" placeholder='Name' name='username' value={input.username} onChange={handleChange} />
                 <input type="email" placeholder='Email' name='email' value={input.email} onChange={handleChange} />
-                <input type="number" placeholder='Phone Number' name='phonenumber' value={input.phonenumber} onChange={handleChange} />
+                <input type="text" placeholder='Phone Number' name='phonenumber' value={input.phonenumber} onChange={handleChange} maxLength={10} />
                 <input type="password" placeholder='Password' name='password' value={input.password} onChange={handleChange} />
                 <input type="password" placeholder='Confirm Password' name='confirmpassword' value={input.confirmpassword} onChange={handleChange} />
                 <button type="submit">Submit</button>
 
-                {errMsg && <p style={{ color: "red",textAlign:"center"}}>{errMsg}</p>}
+                {errMsg && <p style={{ color: "red", textAlign: "center" }}>{errMsg}</p>}
             </form>
             <p style={{ textAlign: "center", marginTop: "20px" }}>
                 Already have an account?{" "}

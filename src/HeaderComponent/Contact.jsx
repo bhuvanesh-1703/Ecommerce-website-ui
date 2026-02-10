@@ -1,13 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../css/contact.css";
+import { authContext } from "../App";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Contact = () => {
+  const { userData } = useContext(authContext);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handledata = () => {
-    alert(`Name: ${name}\nPhone: ${phone}\nEmail: ${email}, 'Required ?'`);
+  useEffect(() => {
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        setName(user.username || "");
+        setEmail(user.email || "");
+        setPhone(user.phonenumber || "");
+        setIsLoggedIn(true);
+      } catch (error) {
+        console.error("user data", error);
+      }
+    }
+  }, [userData]);
+
+  const handledata = async () => {
+    if (!name || !email || !phone) {
+      Swal.fire({
+        icon: "warning",
+        title: "Validation Error",
+        text: "All fields are required",
+        confirmButtonColor: "#56021F"
+      });
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:5100/contact", {
+        name,
+        email,
+        phone
+      });
+
+      if (response.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Your message has been sent successfully!",
+          confirmButtonColor: "#56021F"
+        });
+        if (!isLoggedIn) {
+          setName("");
+          setEmail("");
+          setPhone("");
+        }
+      }
+    } catch (error) {
+      console.error("Contact submission error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to send message. Please try again.",
+        confirmButtonColor: "#56021F"
+      });
+    }
   };
 
   return (
@@ -28,15 +85,18 @@ const Contact = () => {
         <input
           type="text"
           placeholder="Enter your name"
-          value={name}
+          value={name.toUpperCase()}
           onChange={(e) => setName(e.target.value)}
+          readOnly={isLoggedIn}
+          style={isLoggedIn ? {   } : {}}
         />
         <label>Phone No</label>
         <input
-          type="number"
+          type="text"
           placeholder="Enter mobile number"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
+          maxLength={10}
         />
         <label>Email</label>
         <input
@@ -44,6 +104,8 @@ const Contact = () => {
           placeholder="Enter email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          readOnly={isLoggedIn}
+          style={isLoggedIn ? {  } : {}}
         />
         <button className="csub" onClick={handledata} type="submit">
           Submit
