@@ -59,7 +59,7 @@
 }
 
 .order-text {
-  display: flex;
+  
   align-items: center;
   gap: 6px;
   margin: 4px 0;
@@ -82,7 +82,7 @@
   color: #56021f;
 }
 
-/* Responsive */
+
 @media (max-width: 600px) {
   .order-details {
     flex-direction: column;

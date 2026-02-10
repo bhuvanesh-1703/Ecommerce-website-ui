@@ -18,6 +18,8 @@ const Product = () => {
     try {
       const response = await axios.get("http://localhost:5100/admin/products");
       setProducts(response.data.data);
+    
+      
     } catch (error) {
       console.error("Failed to fetch products", error);
       Swal.fire({
