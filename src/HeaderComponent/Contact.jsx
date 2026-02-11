@@ -8,9 +8,21 @@ const Contact = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
--
 
 
+  const getUser = () => {
+    const storedUserRaw = localStorage.getItem("userId");
+    if (storedUserRaw) {
+      try {
+        const storedUser = JSON.parse(storedUserRaw);
+        setName(storedUser.username || "");
+        setPhone(storedUser.phonenumber || "");
+        setEmail(storedUser.email || "");
+      } catch (err) {
+        console.error("Invalid user data in localStorage", err);
+      }
+    }
+  };
 
 
   const postContact = async () => {
