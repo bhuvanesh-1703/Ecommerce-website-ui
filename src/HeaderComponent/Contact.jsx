@@ -9,24 +9,14 @@ const Contact = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    if (userData) {
-      try {
-        const user = JSON.parse(userData);
-        setName(user.username || "");
-        setEmail(user.email || "");
-        setPhone(user.phonenumber || "");
-        setIsLoggedIn(true);
-      } catch (error) {
-        console.error("user data", error);
-      }
-    }
-  }, [userData]);
+-
 
-  const handledata = async () => {
-    if (!name || !email || !phone) {
+
+
+
+  const postContact = async () => {
+    if (!name || !phone || !email) {
       Swal.fire({
         icon: "warning",
         title: "Validation Error",
