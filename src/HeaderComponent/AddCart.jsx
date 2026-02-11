@@ -26,6 +26,8 @@ const AddCart = () => {
       );
 
       setCartItems(validItems);
+      console.log(validItems);
+      
       calculateTotal(validItems);
     } catch (error) {
       console.log('Failed to fetch cart', error);

@@ -1,14 +1,9 @@
-/* Product.css - PX Based */
 
-/* General page styling */
-
-/* Product heading */
 .head {
   font-size: 32px;
   color: #333333;
 }
 
-/* Search + filter bar */
 input[type="search"] {
   width: 250px;
   padding: 8px 12px;
@@ -26,7 +21,6 @@ h3:hover {
   background-color: #f0f0f0;
 }
 
-/* Product grid */
 .whole {
   display: flex;
   flex-wrap: wrap;
@@ -35,7 +29,6 @@ h3:hover {
   margin: 20px;
 }
 
-/* Product card */
 .card {
   border: 1px solid #eeeeee;
   border-radius: 14px;
@@ -51,7 +44,7 @@ h3:hover {
 .card:hover {
   transform: translateY(-8px);
   box-shadow: 0px 12px 28px rgba(86, 2, 31, 0.15);
-  border-color: #ffd41d;
+  border-color: #f7f6f4;
 }
 
 .card img {
@@ -94,7 +87,7 @@ h3:hover {
   font-size: 21px;
 }
 
-/* Add to cart button */
+
 .btn {
   background-color: #56021f;
   color: #ffffff;

@@ -1,8 +1,7 @@
-/* Lux Flat Modern Header Style - Maroon & Yellow Combination - PX Based */
 
 .header {
     background-color: #56021f !important;
-    /* Solid Premium Maroon */
+  
     padding: 12px 0px !important;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -12,7 +11,7 @@
     margin: 0px auto;
 }
 
-/* Brand - Vibrant Yellow */
+
 .brand {
     color: #FFD41D !important;
     font-size: 24px !important;
@@ -23,12 +22,12 @@
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Navigation - Center Centered */
+
 .list {
     flex: 1;
     display: flex !important;
     justify-content: center !important;
-    /* Forces centering of contents */
+  
 }
 
 /* Nav Links - Yellow Accents */
@@ -40,6 +39,7 @@
     letter-spacing: 1.2px;
     padding: 8px 20px !important;
     transition: all 0.3s ease !important;
+    margin-left: 50px;
 }
 
 .ilist:hover,

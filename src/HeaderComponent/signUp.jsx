@@ -21,11 +21,7 @@ const SignUp = () => {
         setInput({ ...input, [e.target.name]: e.target.value });
     };
 
-    const getUser = async () => {
-        const response = await axios.get("http://localhost:5100/admin/users");
-        console.log(response.data);
 
-    }
 
     const handleSignUp = async (e) => {
         e.preventDefault();

@@ -13,13 +13,19 @@ const Orders = () => {
       const storedUser = JSON.parse(localStorage.getItem("userId"));
       const currentUserId = storedUser._id;
 
+      console.log(storedUser)
+      
+      console.log(currentUserId)
+
       const userOrders = response.data.data.filter(
-        order => order.userId?._id?.toString() === currentUserId
+        order => order.userId._id.toString() === currentUserId
       );
 
       setOrders(userOrders);
+      console.log(userOrders);
+      
     } catch (error) {
-      console.error("Error fetching orders:", error);
+      console.error("fetching orders:", error);
     }
   };
 
@@ -45,20 +51,20 @@ const Orders = () => {
                   </span>
                 </div>
 
-                <div className="order-details">
+                <div className="order-detail">
                   <div className="order-info">
-                    <h3 className="order-title">
-                      <span>Product Name: </span>
-                      {order.products?.[0]?.productId?.productname || 'Product'}
+                    <h3 className="order-title"  style={{color:"black"}}>
+                    Product Name:     <strong  style={{color:"#56021f"}}>{order.products?.[0].productId.productname || 'Product'}</strong>
+                    
                     </h3>
 
                     <p className="order-text">
-                      <FiMapPin size={14} />
-                      {order.deliveryAddress?.city}, {order.deliveryAddress?.state}
+                      <FiMapPin size={14} style={{marginRight:"2px"}}/> 
+                       {order.deliveryAddress.city}, {order.deliveryAddress.state}
                     </p>
 
-                    <p className="order-text">
-                      <FiTruck size={14} />
+                    <p className="order-text" >
+                      <FiTruck size={14} style={{marginRight:"2px"}} />
                       {order.paymentMethod}
                     </p>
 
