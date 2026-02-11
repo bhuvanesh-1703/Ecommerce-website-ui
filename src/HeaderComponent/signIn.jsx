@@ -32,7 +32,7 @@ const SignIn = () => {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:5100/auth/login", input);
-            console.log(response.data);
+            // console.log(response.data);
 
             Swal.fire({
                 title: "Good job!",
@@ -42,8 +42,10 @@ const SignIn = () => {
             });
 
             setUserData(JSON.stringify(response.data.data.userData));
-            localStorage.setItem("userId", JSON.stringify(response.data.data.userData));
+
+            localStorage.setItem("userData", JSON.stringify(response.data.data.userData));
             localStorage.setItem("token", JSON.stringify(response.data.data.token));
+
             navigate('/')
 
             setInput({ email: "", password: "" });
@@ -59,9 +61,7 @@ const SignIn = () => {
         }
     };
 
-    const [errMsg, setErrMsg] = useState(null)
-
-
+ 
 
     // useEffect(() => {
     //     try {
