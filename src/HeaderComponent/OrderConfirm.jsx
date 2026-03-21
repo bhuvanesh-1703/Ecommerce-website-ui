@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -108,13 +107,13 @@ const Checkout = () => {
 
       });
 
-      // Clear each item in the cart one by one from the backend
+     
       for (let i = 0; i < cartItems.length; i++) {
         const item = cartItems[i];
         await axios.delete(`http://localhost:5100/cart/${item._id}`);
       }
 
-      setCart([]); // Clear the local cart state
+      setCart([]); 
 
       await axios.post("http://localhost:5100/ordersuccessmail", {
         toMail: parsedUser.email,

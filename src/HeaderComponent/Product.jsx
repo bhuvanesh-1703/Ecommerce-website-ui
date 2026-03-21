@@ -7,17 +7,19 @@ import Swal from "sweetalert2";
 const Product = () => {
   const navigate = useNavigate();
 
-  // States
+
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState("newest");
 
-  // Fetch products
+
   const getProducts = async () => {
     try {
       const response = await axios.get("http://localhost:5100/admin/products");
       setProducts(response.data.data);
+    
+      
     } catch (error) {
       console.error("Failed to fetch products", error);
       Swal.fire({
@@ -72,7 +74,7 @@ const Product = () => {
     }
   };
 
-  // Filtering + sorting
+
   let filteredProducts = products.filter((pro) =>
     pro.productname.toLowerCase().includes(searchTerm.toLowerCase())
   );

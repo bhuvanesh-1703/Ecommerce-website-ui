@@ -1,78 +1,68 @@
 .contact-container {
   display: flex;
-  margin-top: 50px;
-  justify-content: space-around;
-  align-items: flex-start;
+
+  align-items: center;
+  padding: 50px;
   font-family: Arial, sans-serif;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-left: 20px;
+
 }
 
 .contact-info {
-  border: 2px solid black;
-  padding: 5%;
-  margin-left: 5%;
-  margin-top: 5%;
-  border-radius: 20px;
-  background-color: #f9f9f9;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .contact-title {
-  color: #000000;
-  margin-bottom: 10px;
+  font-size: 2rem;
+  color: #56021F;
 }
 
 .contact-subtitle {
-  color: #333333;
-  margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: #333;
 }
 
-.num {
-  font-size: 16px;
-  margin: 5px 0px;
+.info-item .num {
+  margin: 5px 0;
 }
 
-.touch {
-  flex: 1;
-  margin-left: 50px;
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  border: solid 1px #000000;
   padding: 20px;
-  border: 2px solid #cccccc;
-  border-radius: 15px;
-  background-color: #fdfdfd;
-  margin-right: 20px;
-}
-
-.touch-title {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #000000;
-}
-
-.touch label {
-  display: block;
-  margin: 10px 0px 5px;
-  font-weight: bold;
-}
-
-.touch input {
+  border-radius: 10px;
   width: 100%;
-  padding: 8px;
-  margin-bottom: 15px;
-  border: 1px solid #aaaaaa;
+  margin-left: 30%;
+}
+
+.contact-form input {
+  margin: 8px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
   border-radius: 5px;
+  width: 90%;
 }
 
-.csub {
-  background-color: #56021f;
-  color: #ffffff;
-  padding: 10px 20px;
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.btn-group button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+  background-color: #56021F;
+  color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: 0.3s ease;
-  width: 20%;
 }
 
-.csub:hover {
-  background-color: #6b062a;
+.btn-group button:hover {
+  background-color: #7a0a2f;
 }

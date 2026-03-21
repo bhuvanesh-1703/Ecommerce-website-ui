@@ -22,10 +22,10 @@ const SignUp = () => {
     };
 
 
-   
+
     const handleSignUp = async (e) => {
         e.preventDefault();
-      
+
         const { username, email, phonenumber, password, confirmpassword } = input;
 
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -77,6 +77,11 @@ const SignUp = () => {
                     password: "",
                     confirmpassword: ""
                 });
+                await axios.post("http://localhost:5100/registersuccessmail", {
+                    toMail: email,
+                    register: { email }  
+                });
+
                 navigate("/login");
             }
         } catch (error) {
@@ -97,7 +102,7 @@ const SignUp = () => {
                 <input type="password" placeholder='Confirm Password' name='confirmpassword' value={input.confirmpassword} onChange={handleChange} />
                 <button type="submit">Submit</button>
 
-                {errMsg && <p style={{ color: "red",textAlign:"center"}}>{errMsg}</p>}
+                {errMsg && <p style={{ color: "red", textAlign: "center" }}>{errMsg}</p>}
             </form>
             <p style={{ textAlign: "center", marginTop: "20px" }}>
                 Already have an account?{" "}

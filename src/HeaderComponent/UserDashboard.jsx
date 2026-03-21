@@ -17,7 +17,8 @@ const UserDashboard = () => {
           if (storedUser && typeof storedUser === "object") {
             setUserName(storedUser);
           } else {
-            throw new Error("Invalid user data");
+            console.log();
+            ("Invalid user data");
           }
         } catch (err) {
           console.error("Failed to parse user data:", err);

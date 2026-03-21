@@ -15,8 +15,8 @@ const AddCart = () => {
   const getCart = async () => {
     try {
       const storedUser = JSON.parse(localStorage.getItem('userId'));
-      const userId = storedUser._id 
- 
+      const userId = storedUser._id;
+      console.log("userId",userId);
       
 
       const response = await axios.get(`http://localhost:5100/cart?userId=${userId}`);
@@ -26,6 +26,8 @@ const AddCart = () => {
       );
 
       setCartItems(validItems);
+      console.log(validItems);
+      
       calculateTotal(validItems);
     } catch (error) {
       console.log('Failed to fetch cart', error);
