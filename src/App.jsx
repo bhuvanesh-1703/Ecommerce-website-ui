@@ -13,13 +13,14 @@ import ProductDetails from './HeaderComponent/ProductDetails'
 import UserDetails from './HeaderComponent/OrderConfirm'
 import Payment from './HeaderComponent/Payment'
 import axios from 'axios'
+import { API_URL } from './config'
 
 import AddCart from './HeaderComponent/AddCart'
 import UserDashboard from './HeaderComponent/UserDashboard'
 import Orders from './UserDashboard/Orders'
 import MainLayout from './components/MainLayout';
 import AdminLayout from './admin/AdminLayout';
-import AdminDashboard from './admin/Dashbaord';
+import AdminDashboard from './admin/Dashboard';
 import AdminUsers from './admin/users';
 import AdminCategory from './admin/Category';
 import AdminProducts from './admin/products';
@@ -51,9 +52,20 @@ function App() {
   const getCart = async () => {
     try {
       const storedUser = localStorage.getItem('userId');
-      const userId = JSON.parse(storedUser)._id || JSON.parse(storedUser);
+      if (!storedUser) {
+        setCart([]);
+        return;
+      }
+      
+      let userId;
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        userId = parsedUser._id || parsedUser;
+      } catch (e) {
+        userId = storedUser;
+      }
 
-      const response = await axios.get(`http://localhost:5100/cart?userId=${userId}`);
+      const response = await axios.get(`${API_URL}/cart?userId=${userId}`);
 
       const validItems = response.data.data.filter(
         item => item.productId !== null

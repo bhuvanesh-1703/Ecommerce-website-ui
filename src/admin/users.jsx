@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 import { GiCancel } from "react-icons/gi";
 import Swal from 'sweetalert2';
 
@@ -27,7 +28,7 @@ const Users = () => {
 
     if (isEdit) {
       try {
-        await axios.put(`http://localhost:5100/admin/users/${editUserId}`, user);
+        await axios.put(`${API_URL}/admin/users/${editUserId}`, user);
         getUsers();
         setIsLogin(true);
         setIsEdit(false);
@@ -63,7 +64,7 @@ const Users = () => {
             text: 'All fields are required',
           });
         }
-        await axios.post("http://localhost:5100/admin/users", user);
+        await axios.post(`${API_URL}/admin/users`, user);
         Swal.fire({
           icon: 'success',
           title: 'Added!',
@@ -104,7 +105,7 @@ const Users = () => {
 
   const getUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/admin/users");
+      const response = await axios.get(`${API_URL}/admin/users`);
       setUserShow(response.data);
     } catch (err) {
       console.log("Fetching failed");
@@ -128,7 +129,7 @@ const Users = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:5100/admin/users/${id}`);
+        await axios.delete(`${API_URL}/admin/users/${id}`);
         Swal.fire(  
           'Deleted!',
           'User has been deleted.',
@@ -173,10 +174,10 @@ const Users = () => {
       </div>
 
       {isLogin ? (
-        <div style={{ marginLeft: "20%", marginTop: "30px" }}>
-          <table border={2}>
+        <div className="admin-table-wrapper">
+          <table>
             <thead>
-              <tr style={{ textAlign: "center" }}>
+              <tr>
                 <th>S.No</th>
                 <th>Username</th>
                 <th>Email</th>
@@ -194,11 +195,19 @@ const Users = () => {
                   <td>{user.username.toUpperCase()}</td>
                   <td>{user.email}</td>
                   <td>{user.phonenumber}</td>
-                  <td>{user.role}</td>
-                  <td>{user.status.toUpperCase().slice(0, 1) + user.status.slice(1)}</td>
+                  <td>
+                    <span className={`role-badge ${user.role}`}>
+                      {user.role}
+                    </span>
+                  </td>
+                  <td>
+                    <span className={`status-badge ${user.status}`}>
+                      {user.status.toUpperCase().slice(0, 1) + user.status.slice(1)}
+                    </span>
+                  </td>
                   <td>
                     <button
-                      style={{ backgroundColor: "#218332" }}
+                      className="edit-btn"
                       onClick={() => handleEdit(user)}
                     >
                       Edit
@@ -206,7 +215,7 @@ const Users = () => {
                   </td>
                   <td>
                     <button
-                      style={{ backgroundColor: "#fa1837ff" }}
+                      className="delete-btn"
                       onClick={() => deleteUsers(user._id)}
                     >
                       Delete

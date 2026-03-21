@@ -1,39 +1,41 @@
-/* Header Component Styles */
 .header {
-    height: var(--header-height);
-    background-color: var(--bg-surface);
-    margin-left: var(--sidebar-width);
+    height: var(--admin-header-height);
+    background-color: var(--admin-bg-surface);
     padding: 0 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--admin-border);
     position: sticky;
     top: 0;
     z-index: 900;
 }
 
 .header h1 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--admin-text-primary);
     margin: 0;
 }
 
 .header h3.add-btn {
-    background: transparent;
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    padding: 8px 16px;
+    background: var(--admin-brand-light);
+    color: var(--admin-brand);
+    border: none;
+    padding: 10px 20px;
     border-radius: 99px;
     font-size: 0.9rem;
-    box-shadow: var(--shadow-sm);
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    transition: all 0.2s ease;
 }
 
 .header h3.add-btn:hover {
-    background-color: var(--bg-body);
+    background-color: var(--admin-brand);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: var(--admin-shadow-md);
 }

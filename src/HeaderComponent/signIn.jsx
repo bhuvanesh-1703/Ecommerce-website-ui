@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_URL } from '../config';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import '../css/signin.css'
@@ -23,7 +24,7 @@ const SignIn = () => {
     const [localhost, setLocalHost] = useState('')
 
     const localhosts = async () => {
-        const response = await axios.post('http://localhost:5100')
+        const response = await axios.post(`${API_URL}`)
        // console.log(response.data);
         setLocalHost(localStorage.getItem('token'))
     }
@@ -31,7 +32,7 @@ const SignIn = () => {
     const handleSignIn = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:5100/auth/login", input);
+            const response = await axios.post(`${API_URL}/auth/login`, input);
             // console.log(response.data);
 
             Swal.fire({

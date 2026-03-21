@@ -1,26 +1,37 @@
 /* Order Component Specific Styles */
-
-/* Target the wrapper for the Order table specifically */
-.order-container .table-responsive {
-    overflow-x: visible !important;
-    /* Remove scroll type */
-    margin-right: 80px;
-    /* Add margin right as requested */
+.order-container {
+    padding-bottom: 40px;
 }
 
-/* Ensure the table fits or behaves as desired */
-.order-container table {
-    width: 100%;
-    border-collapse: separate;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-surface);
-    margin-right: 20%;
+.order-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-/* Ensure consistent cell padding */
-.order-container td,
-.order-container th {
-    padding: 16px;
-    vertical-align: middle;
+.order-item-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.order-item-row img {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid var(--admin-border);
+}
+
+.order-item-info {
+    font-size: 0.85rem;
+}
+
+.order-item-name {
+    font-weight: 600;
+    display: block;
+}
+
+.order-item-qty {
+    color: var(--admin-text-secondary);
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../config";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { GiCancel } from "react-icons/gi";
@@ -24,7 +25,7 @@ const Products = () => {
 
   const getProduct = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/admin/products");
+      const response = await axios.get(`${API_URL}/admin/products`);
       setShowProduct(response.data.data);
       console.log(response.data.data);
     } catch (error) {
@@ -34,7 +35,7 @@ const Products = () => {
 
   const getCategory = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/admin/category");
+      const response = await axios.get(`${API_URL}/admin/category`);
       setCategory(response.data.categories);
     } catch (error) {
       console.log("Failed to fetch category", error);
@@ -56,7 +57,7 @@ const Products = () => {
     if (isEditMode) {
       try {
         const response = await axios.put(
-          `http://localhost:5100/admin/products/${editProductId}`,
+          `${API_URL}/admin/products/${editProductId}`,
           product,
         );
         // console.log(response.data);
@@ -97,7 +98,7 @@ const Products = () => {
         formData.append("product", JSON.stringify(product));
 
         const response = await axios.post(
-          "http://localhost:5100/admin/products",
+          `${API_URL}/admin/products`,
           formData,
           {
             header: {
@@ -151,7 +152,7 @@ const Products = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:5100/admin/products/${id}`);
+        await axios.delete(`${API_URL}/admin/products/${id}`);
         Swal.fire("Deleted!", "The product has been deleted.", "success");
         getProduct();
       } catch (error) {
@@ -267,37 +268,18 @@ const Products = () => {
           </button>
         </div>
       ) : (
-        <div className="tables-responsive">
-          <table className="table">
+        <div className="admin-table-wrapper">
+          <table>
             <thead>
               <tr>
-                <th style={{ backgroundColor: "#66baeb", color: "white" }}>
-                  id
-                </th>
-                <th style={{ backgroundColor: "#66baeb", color: "white" }}>
-                  Image
-                </th>
-                <th style={{ backgroundColor: "#66baeb", color: "white" }}>
-                  Product Name
-                </th>
-                <th style={{ backgroundColor: "#66baeb", color: "white" }}>
-                  Category
-                </th>
-                <th style={{ backgroundColor: "#66baeb", color: "white" }}>
-                  Price
-                </th>
-                <th style={{ backgroundColor: "#66baeb", color: "white" }}>
-                  Stock
-                </th>
-                <th style={{ backgroundColor: "#66baeb", color: "white" }}>
-                  Status
-                </th>
-                <th style={{ backgroundColor: "#66baeb", color: "white" }}>
-                  Description
-                </th>
-                <th style={{ backgroundColor: "#66baeb", color: "white" }}>
-                  Actions
-                </th>
+                <th>S.No</th>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -305,35 +287,34 @@ const Products = () => {
                 <tr key={p._id}>
                   <td>{index + 1}</td>
                   <td>
-                    <img
-                      src={`http://localhost:5100/uploads/${p.image}`}
-                      alt={p.productname}
-                      style={{ objectFit: "cover" }}
-                    />
+                    <div className="product-img-cell">
+                      <img
+                        src={`${API_URL}/uploads/${p.image}`}
+                        alt={p.productname}
+                      />
+                    </div>
                   </td>
-                  <td>{p.productname}</td>
+                  <td className="product-name-cell">{p.productname}</td>
                   <td>{p?.category?.categoryname}</td>
-                  <td>₹{p.price}</td>
+                  <td className="price-cell">₹{p.price}</td>
                   <td>{p.stock}</td>
-                  <td>{p.status}</td>
                   <td>
-                    {p.description.length > 20
-                      ? p.description.slice(0, 20) + "..."
-                      : p.description}
+                    <span className={`status-badge ${p.status?.toLowerCase()}`}>
+                      {p.status}
+                    </span>
                   </td>
                   <td>
                     <button
-                      style={{ background: "#219cc9" }}
+                      className="edit-btn"
                       onClick={() => handleEditProduct(p)}
                     >
-                      {" "}
                       <FaEdit />
                     </button>
                     <button
-                      style={{ backgroundColor: "#FF3838", marginLeft: "5px" }}
+                      className="delete-btn"
+                      style={{ marginLeft: "8px" }}
                       onClick={() => handleDeleteProduct(p._id)}
                     >
-                      {" "}
                       <MdDeleteForever />
                     </button>
                   </td>

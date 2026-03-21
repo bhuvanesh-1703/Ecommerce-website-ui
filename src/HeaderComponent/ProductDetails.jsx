@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../config';
 import '../css/productDetail.css'
 import { TfiCup } from "react-icons/tfi";
 import { BsCashCoin } from "react-icons/bs";
@@ -17,7 +18,7 @@ export default function ProductDetails() {
 
   const getProduct = async () => {
     try {
-      const response = await axios.get(`http://localhost:5100/admin/products/${id.product_id}`);
+      const response = await axios.get(`${API_URL}/admin/products/${id.product_id}`);
       setProduct(response.data.data);
       // console.log(response.data.data);
     } catch (error) {
@@ -43,7 +44,7 @@ export default function ProductDetails() {
         quantity: 1
       };
 
-      const response = await axios.post("http://localhost:5100/cart", cart);
+      const response = await axios.post(`${API_URL}/cart`, cart);
 
       if (response.data.success) {
         Swal.fire({
@@ -96,7 +97,7 @@ export default function ProductDetails() {
         <div className='who'>
 
           <div className='cards'>
-            <img src={`http://localhost:5100/uploads/${product.image}`} alt="" />
+            <img src={`${API_URL}/uploads/${product.image}`} alt="" />
           </div>
           <div className="detail">
             <h2>{product.productname}</h2>

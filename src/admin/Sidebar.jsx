@@ -7,7 +7,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { IoMdLogOut } from "react-icons/io";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useNavigate } from "react-router-dom";
-import Users from "./users";
+import Dashboard from "./Dashboard";
 import { TbCategoryPlus } from "react-icons/tb";
 import { AiOutlineMessage } from "react-icons/ai";
 import "./Sidebar.css";
@@ -17,7 +17,7 @@ const Sidebar = () => {
     const navigate = useNavigate()
 
     return (
-        <div className="sidebar" style={{backgroundColor:"#F3F4F4"}}>
+        <div className="sidebar">
             <h2>Ours</h2>
 
 

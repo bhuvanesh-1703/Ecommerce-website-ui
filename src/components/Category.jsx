@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../config";
 import "../css/category.css";
 import Swal from "sweetalert2";
 
@@ -15,7 +16,7 @@ const Category = () => {
 
   const getCat = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/admin/category");
+      const response = await axios.get(`${API_URL}/admin/category`);
       setCategories(response.data.categories);
     } catch (error) {
       console.log("Category fetch failed", error);
@@ -24,7 +25,7 @@ const Category = () => {
 
   const getProduct = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/admin/products");
+      const response = await axios.get(`${API_URL}/admin/products`);
       setProducts(response.data.data);
     } catch (error) {
       console.log("Failed to fetch products", error);
@@ -59,7 +60,7 @@ const Category = () => {
         quantity: 1,
       };
 
-      const response = await axios.post("http://localhost:5100/cart", cart);
+      const response = await axios.post(`${API_URL}/cart`, cart);
 
       if (response.data.success) {
         Swal.fire({
@@ -98,7 +99,7 @@ const Category = () => {
             onClick={() => filter(cat.categoryname)}
           >
             <img
-              src={`http://localhost:5100/uploads/${cat.image}`}
+              src={`${API_URL}/uploads/${cat.image}`}
               alt={cat.categoryname}
             />
             <span>{cat.categoryname}</span>
@@ -115,7 +116,7 @@ const Category = () => {
                 <div className="product-image-container">
                   {prod.image && (
                     <img
-                      src={`http://localhost:5100/uploads/${prod.image}`}
+                      src={`${API_URL}/uploads/${prod.image}`}
                       className="product-image"
                       alt={prod.productname}
                     />

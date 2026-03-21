@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 import { MdOutlineCancel } from "react-icons/md";
 import Swal from 'sweetalert2';
 import '../css/cart.css';
@@ -19,7 +20,7 @@ const AddCart = () => {
       console.log("userId",userId);
       
 
-      const response = await axios.get(`http://localhost:5100/cart?userId=${userId}`);
+      const response = await axios.get(`${API_URL}/cart?userId=${userId}`);
 
       const validItems = response.data.data.filter(
         item => item.productId !== null
@@ -38,7 +39,7 @@ const AddCart = () => {
     if (qty < 1) return;
 
     try {
-      await axios.put(`http://localhost:5100/cart/${id}`, { quantity: qty });
+      await axios.put(`${API_URL}/cart/${id}`, { quantity: qty });
       getCart();
     } catch (error) {
       console.log("Failed to update quantity", error);
@@ -66,7 +67,7 @@ const AddCart = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:5100/cart/${id}`);
+        await axios.delete(`${API_URL}/cart/${id}`);
         getCart();
         Swal.fire({
           icon: "success",
@@ -104,7 +105,7 @@ const AddCart = () => {
               <tr key={pro._id}>
                 <td>
                   <img
-                    src={`http://localhost:5100/uploads/${pro.productId.image}`}
+                    src={`${API_URL}/uploads/${pro.productId.image}`}
                     alt={pro.productId.productname}
                     className="cart-img"
                   />

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { API_URL } from "../config";
 import "../css/product.css";
 import { useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -16,7 +17,7 @@ const Product = () => {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/admin/products");
+      const response = await axios.get(`${API_URL}/admin/products`);
       setProducts(response.data.data);
     
       
@@ -49,7 +50,7 @@ const Product = () => {
         quantity: 1,
       };
 
-      const response = await axios.post("http://localhost:5100/cart", cart);
+      const response = await axios.post(`${API_URL}/cart`, cart);
 
       if (response.data.success) {
         Swal.fire({
@@ -159,7 +160,7 @@ const Product = () => {
                 }}
               >
                 <img
-                  src={`http://localhost:5100/uploads/${pro.image}`}
+                  src={`${API_URL}/uploads/${pro.image}`}
                   alt={pro.productname}
                   className="card-img-top"
                 />

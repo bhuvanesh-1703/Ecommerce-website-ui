@@ -3,6 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { authContext } from "../App";
+import { API_URL } from "../config";
 import "../css/orderconfirm.css";
 
 
@@ -35,7 +36,7 @@ const Checkout = () => {
       const storedUser = localStorage.getItem("userId");
       const userId = JSON.parse(storedUser)._id || JSON.parse(storedUser);
 
-      const res = await axios.get(`http://localhost:5100/cart?userId=${userId}`);
+      const res = await axios.get(`${API_URL}/cart?userId=${userId}`);
 
 
       const validItems = res.data.data.filter(
@@ -101,7 +102,7 @@ const Checkout = () => {
         paymentMethod
       };
 
-      await axios.post("http://localhost:5100/admin/order", orderData);
+      await axios.post(`${API_URL}/admin/order`, orderData);
 
       Swal.fire("Success", "Order placed successfully!", "success").then(() => {
 
@@ -110,12 +111,12 @@ const Checkout = () => {
      
       for (let i = 0; i < cartItems.length; i++) {
         const item = cartItems[i];
-        await axios.delete(`http://localhost:5100/cart/${item._id}`);
+        await axios.delete(`${API_URL}/cart/${item._id}`);
       }
 
       setCart([]); 
 
-      await axios.post("http://localhost:5100/ordersuccessmail", {
+      await axios.post(`${API_URL}/ordersuccessmail`, {
         toMail: parsedUser.email,
         order: {
           email: parsedUser.email,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 import '../css/order.css';
 import { FiMapPin, FiTruck } from 'react-icons/fi';
 
@@ -8,7 +9,7 @@ const Orders = () => {
 
   const getOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/admin/order");
+      const response = await axios.get(`${API_URL}/admin/order`);
 
       const storedUser = JSON.parse(localStorage.getItem("userId"));
       const currentUserId = storedUser._id;

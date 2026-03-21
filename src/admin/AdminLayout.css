@@ -1,0 +1,162 @@
+:root {
+  --admin-sidebar-width: 260px;
+  --admin-header-height: 70px;
+  --admin-brand: #56021f;
+  --admin-brand-light: rgba(86, 2, 31, 0.1);
+  --admin-bg-body: #f8f9fa;
+  --admin-bg-surface: #ffffff;
+  --admin-text-primary: #1a1a1a;
+  --admin-text-secondary: #6c757d;
+  --admin-border: #e9ecef;
+  --admin-shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --admin-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --admin-radius-md: 12px;
+  --admin-radius-lg: 16px;
+}
+
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--admin-bg-body);
+  font-family: 'Inter', sans-serif;
+}
+
+.admin-main {
+  flex: 1;
+  margin-left: var(--admin-sidebar-width);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-content {
+  padding: 24px 40px;
+  flex: 1;
+}
+
+/* Global Table Styling for Admin */
+.admin-content table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--admin-bg-surface);
+  border-radius: var(--admin-radius-md);
+  box-shadow: var(--admin-shadow-md);
+  overflow: hidden;
+  border: 1px solid var(--admin-border);
+}
+
+.admin-content th {
+  background-color: #f1f3f5;
+  color: var(--admin-text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 16px;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-content td {
+  padding: 16px;
+  border-bottom: 1px solid var(--admin-border);
+  color: var(--admin-text-primary);
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.admin-content tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-content tr:hover td {
+  background-color: rgba(0,0,0,0.01);
+}
+
+/* Common Header/Title Styling */
+.admin-content h2 {
+  font-size: 1.75rem;
+  margin-bottom: 24px;
+  color: var(--admin-text-primary);
+}
+
+/* Button Refinement */
+.admin-content button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-content button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+/* Badges */
+.status-badge, .role-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-badge.approved, .status-badge.active {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge.pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.rejected {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.role-badge.admin {
+  background-color: var(--admin-brand-light);
+  color: var(--admin-brand);
+}
+
+.role-badge.customer {
+  background-color: #e0f2fe;
+  color: #075985;
+}
+
+/* Product Specifics */
+.product-img-cell img {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--admin-border);
+}
+
+.price-cell {
+  font-weight: 700;
+  color: var(--admin-brand);
+}
+
+.product-name-cell {
+  font-weight: 600;
+}
+
+/* Edit/Delete Buttons */
+.edit-btn {
+  background-color: #218332 !important;
+  color: white !important;
+}
+
+.delete-btn {
+  background-color: #fa1837ff !important;
+  color: white !important;
+}
+
+.admin-table-wrapper {
+  margin-top: 20px;
+}

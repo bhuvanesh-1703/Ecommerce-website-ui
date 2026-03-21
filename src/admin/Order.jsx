@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 import { MdDeleteForever } from "react-icons/md";
 import Swal from 'sweetalert2';
 import "./Order.css";
@@ -11,7 +12,7 @@ const Order = () => {
     try {
       const usedata = JSON.parse(localStorage.getItem('userId'))
       console.log('userId', usedata)
-      const response = await axios.get("http://localhost:5100/admin/order");
+      const response = await axios.get(`${API_URL}/admin/order`);
       setOrders(response.data.data);
       console.log(response.data.data);
       
@@ -32,7 +33,7 @@ const Order = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await axios.delete(`http://localhost:5100/admin/order/${orderId}`);
+          const response = await axios.delete(`${API_URL}/admin/order/${orderId}`);
           if (response.data.success) {
             Swal.fire(
               'Deleted!',
@@ -58,57 +59,68 @@ const Order = () => {
   }, []);
 
   return (
-    <div className="main-content order-container">
-      <h2>Orders</h2>
-      <table border="1" cellPadding="10">
-        <thead>
-          <tr>
-            <th>S.No</th>
-            <th>Customer</th>
-            <th>Products</th>
-            <th>Address</th>
-            <th>Pincode</th>
-            <th>Total</th>
-            <th>Order Date</th>
-            <th>Status</th>
-            <th>Payment</th>
-            <th>Delete Orders</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order, index) => (
-            <tr key={order._id}>
-              <td>{index + 1}</td>
-              <td>{order.deliveryAddress.fullname}</td>
-              <td>
-                {order.products.map((product, i) => (
-                  <div key={i}>
-                    <img
-                      src={`http://localhost:5100/uploads/${product.productId?.image}`}
-                      alt={product.productId?.productname}
-                      style={{ objectFit: "cover" }}
-                    />
-                    {product.productId?.productname} (Qty: {product.quantity})
-                  </div>
-                ))}
-              </td>
-              <td>
-                {order.deliveryAddress.address}, {order.deliveryAddress.city}
-              </td>
-              <td>{order.deliveryAddress.pincode}</td>
-              <td>{order.totalPrice}</td>
-              <td>{new Date(order.date).toLocaleString()}</td>
-              <td>{order.status}</td>
-              <td>{order.paymentMethod}</td>
-              <td><MdDeleteForever 
-                size={25} 
-                style={{color:"red",cursor:"pointer"}} 
-                onClick={() => deleteOrder(order._id)}
-              /></td>
+    <div className="admin-content order-container">
+      <h2>Recent Orders</h2>
+      <div className="admin-table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Customer</th>
+              <th>Products</th>
+              <th>Address</th>
+              <th>Total</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Payment</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {orders.map((order, index) => (
+              <tr key={order._id}>
+                <td>{index + 1}</td>
+                <td className="product-name-cell">{order.deliveryAddress.fullname}</td>
+                <td>
+                  <div className="order-items-list">
+                    {order.products.map((product, i) => (
+                      <div key={i} className="order-item-row">
+                        <img
+                          src={`${API_URL}/uploads/${product.productId?.image}`}
+                          alt=""
+                        />
+                        <div className="order-item-info">
+                          <span className="order-item-name">{product.productId?.productname}</span>
+                          <span className="order-item-qty">Qty: {product.quantity}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </td>
+                <td style={{ maxWidth: '200px', fontSize: '0.85rem' }}>
+                  {order.deliveryAddress.address}, {order.deliveryAddress.city} - {order.deliveryAddress.pincode}
+                </td>
+                <td className="price-cell">₹{order.totalPrice}</td>
+                <td>{new Date(order.date).toLocaleDateString()}</td>
+                <td>
+                  <span className={`status-badge ${order.status?.toLowerCase()}`}>
+                    {order.status}
+                  </span>
+                </td>
+                <td>{order.paymentMethod}</td>
+                <td>
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteOrder(order._id)}
+                  >
+                    <MdDeleteForever size={20} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

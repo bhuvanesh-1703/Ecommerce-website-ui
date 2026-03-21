@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../config";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import "../css/userdetails.css";
@@ -20,7 +21,7 @@ const UserDetails = () => {
   // Fetch cart total
   const getCartTotal = async () => {
     try {
-      const res = await axios.get("http://localhost:5100/cart");
+      const res = await axios.get(`${API_URL}/cart`);
       let sum = 0;
       res.data.data.forEach(item => {
         sum += item.productId.price * item.quantity;
@@ -43,7 +44,7 @@ const UserDetails = () => {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:5100/order", {
+      await axios.post(`${API_URL}/order`, {
         ...formData,
         totalAmount: total,
         userId: localStorage.getItem("userId"),

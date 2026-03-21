@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 import Swal from 'sweetalert2';
 
 const Messages = () => {
@@ -7,7 +8,7 @@ const Messages = () => {
 
     const getMessages = async () => {
         try {
-            const response = await axios.get("http://localhost:5100/contact/admin/all");
+            const response = await axios.get(`${API_URL}/contact/admin/all`);
             if (response.data.success) {
                 setMessages(response.data.data);
             }
@@ -28,7 +29,7 @@ const Messages = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await axios.delete(`http://localhost:5100/contact/${id}`);
+                    const response = await axios.delete(`${API_URL}/contact/${id}`);
                     if (response.data.success) {
                         Swal.fire(
                             'Deleted!',
@@ -54,52 +55,47 @@ const Messages = () => {
     }, []);
 
     return (
-        <div style={{ marginLeft: "20%", marginTop: "30px", padding: "20px" }}>
-            <h2 style={{ marginBottom: "20px", color: "#56021F" }}>Contact Us Messages</h2>
-            <table border={1} style={{ width: "95%", borderCollapse: "collapse" }}>
-                <thead>
-                    <tr style={{ backgroundColor: "#e2e1e1ff", color: "white", textAlign: "left" }}>
-                        <th style={{ padding: "10px" }}>S.No</th>
-                        <th style={{ padding: "10px" }}>Name</th>
-                        <th style={{ padding: "10px" }}>Email</th>
-                        <th style={{ padding: "10px" }}>Phone</th>
-                        <th style={{ padding: "10px" }}>Date</th>
-                        <th style={{ padding: "10px" }}>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {messages.length > 0 ? (
-                        messages.map((msg, index) => (
-                            <tr key={msg._id || index}>
-                                <td style={{ padding: "10px" }}>{index + 1}</td>
-                                <td style={{ padding: "10px" }}>{msg.name.toUpperCase()}</td>
-                                <td style={{ padding: "10px" }}>{msg.email}</td>
-                                <td style={{ padding: "10px" }}>{msg.phone}</td>
-                                <td style={{ padding: "10px" }}>{new Date(msg.createdAt).toLocaleString()}</td>
-                                <td style={{ padding: "10px" }}>
-                                    <button 
-                                        onClick={() => handleDelete(msg._id)}
-                                        style={{ 
-                                            backgroundColor: "#d33", 
-                                            color: "white", 
-                                            border: "none", 
-                                            padding: "5px 10px", 
-                                            borderRadius: "4px", 
-                                            cursor: "pointer" 
-                                        }}
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
+        <div className="admin-content">
+            <h2>Customer Messages</h2>
+            <div className="admin-table-wrapper">
+                <table>
+                    <thead>
                         <tr>
-                            <td colSpan="6" style={{ textAlign: "center", padding: "20px" }}>No messages found</td>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Date</th>
+                            <th>Action</th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {messages.length > 0 ? (
+                            messages.map((msg, index) => (
+                                <tr key={msg._id || index}>
+                                    <td>{index + 1}</td>
+                                    <td className="product-name-cell">{msg.name.toUpperCase()}</td>
+                                    <td>{msg.email}</td>
+                                    <td>{msg.phone}</td>
+                                    <td>{new Date(msg.createdAt).toLocaleDateString()}</td>
+                                    <td>
+                                        <button 
+                                            className="delete-btn"
+                                            onClick={() => handleDelete(msg._id)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="6" style={{ textAlign: "center" }}>No messages found</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

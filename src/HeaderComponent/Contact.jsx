@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import "../css/contact.css";
 import { authContext } from "../App";
 import axios from "axios";
+import { API_URL } from "../config";
 import Swal from "sweetalert2";
 
 const Contact = () => {
@@ -37,7 +38,7 @@ const Contact = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5100/contact", {
+      const response = await axios.post(`${API_URL}/contact`, {
         name,
         email,
         phone

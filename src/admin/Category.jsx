@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_URL } from "../config";
 import React, { useState, useEffect, useCallback } from "react";
 import { GiCancel } from "react-icons/gi";
 import Swal from 'sweetalert2';
@@ -19,7 +20,7 @@ const Category = () => {
 
   const getCategory = async () => {
     try {
-      const response = await axios.get("http://localhost:5100/admin/category");
+      const response = await axios.get(`${API_URL}/admin/category`);
       setShowCat(response.data.categories);
     } catch (error) {
       console.log("Category fetch failed", error);
@@ -43,7 +44,7 @@ const Category = () => {
 
       if (isEditMode) {
         await axios.put(
-          `http://localhost:5100/admin/category/${editCategoryId}`,
+          `${API_URL}/admin/category/${editCategoryId}`,
           formData,
           {
             header: {
@@ -60,7 +61,7 @@ const Category = () => {
         });
       } else {
 
-        await axios.post("http://localhost:5100/admin/category", formData, {
+        await axios.post(`${API_URL}/admin/category`, formData, {
 
           header: {
             "Content-Type": "multipart/form-data",
@@ -122,7 +123,7 @@ const Category = () => {
     if (result.isConfirmed) {
       try {
         const res = await axios.delete(
-          `http://localhost:5100/admin/category/${id}`,
+          `${API_URL}/admin/category/${id}`,
         );
         if (res.data.success) {
           Swal.fire(
@@ -179,55 +180,54 @@ const Category = () => {
       </div>
 
       {isCat ? (
-        <div className="main-content">
-          <div className="table-responsive">
-            <table >
-              <thead>
-                <tr>
-                  <th>S.No</th>
-                  <th>Category Name</th>
-                  <th>SubCategory</th>
-                  <th>Description</th>
-                  <th>Image</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredCategories.map((cat, index) => (
-                  <tr key={cat._id || index}>
-                    <td>{index + 1}</td>
-                    <td>{cat.categoryname}</td>
-                    <td>{cat.subcategory}</td>
-                    <td>{cat.description}</td>
-                    <td>
-                      {cat.image && (
+        <div className="admin-table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Category Name</th>
+                <th>SubCategory</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredCategories.map((cat, index) => (
+                <tr key={cat._id || index}>
+                  <td>{index + 1}</td>
+                  <td className="product-name-cell">{cat.categoryname}</td>
+                  <td>{cat.subcategory}</td>
+                  <td>{cat.description}</td>
+                  <td>
+                    {cat.image && (
+                      <div className="product-img-cell">
                         <img
-                          src={`http://localhost:5100/uploads/${cat.image}`}
+                          src={`${API_URL}/uploads/${cat.image}`}
                           alt={cat.categoryname}
-                          width="50"
-                          height="50"
                         />
-                      )}
-                    </td>
-                    <td>
-                      <button
-                        className="edit-btn"
-                        onClick={() => handleEditCategory(cat)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="delete-btn"
-                        onClick={() => deleteCategory(cat._id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                      </div>
+                    )}
+                  </td>
+                  <td>
+                    <button
+                      className="edit-btn"
+                      onClick={() => handleEditCategory(cat)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="delete-btn"
+                      style={{ marginLeft: "8px" }}
+                      onClick={() => deleteCategory(cat._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       ) : (
         <div className="category-container">

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_URL } from '../config';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import '../css/signin.css';
@@ -57,7 +58,7 @@ const SignUp = () => {
         setErrMsg('');
 
         try {
-            const response = await axios.post('http://localhost:5100/auth/register', {
+            const response = await axios.post(`${API_URL}/auth/register`, {
                 username,
                 email,
                 phonenumber,
@@ -78,7 +79,7 @@ const SignUp = () => {
                     password: "",
                     confirmpassword: ""
                 });
-                await axios.post("http://localhost:5100/registersuccessmail", {
+                await axios.post(`${API_URL}/registersuccessmail`, {
                     toMail: email,
                     register: { email }  
                 });
