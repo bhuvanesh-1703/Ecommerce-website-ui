@@ -12,7 +12,8 @@ const SignUp = () => {
         email: "",
         phonenumber: "",
         password: "",
-        confirmpassword: ""
+        confirmpassword: "",
+        role:"admin"
     });
 
     const [errMsg, setErrMsg] = useState('');

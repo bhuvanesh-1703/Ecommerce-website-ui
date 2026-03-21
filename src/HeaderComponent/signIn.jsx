@@ -44,6 +44,7 @@ const SignIn = () => {
             setUserData(JSON.stringify(response.data.data.userData));
 
             localStorage.setItem("userData", JSON.stringify(response.data.data.userData));
+            localStorage.setItem("userId", JSON.stringify(response.data.data.userData));
             localStorage.setItem("token", JSON.stringify(response.data.data.token));
 
             navigate('/')

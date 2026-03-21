@@ -1,28 +1,28 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { FaOpencart } from "react-icons/fa6";
-import { FaUserCircle } from "react-icons/fa";
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import { HiShoppingCart } from "react-icons/hi";
 import '../css/header.css';
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from '../assets/log.png';
 import NavbarText from 'react-bootstrap/esm/NavbarText';
-import { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { authContext } from '../App';
 
 function Header() {
   const navigate = useNavigate();
-  // const [localData] = useState(JSON.parse(localStorage.getItem('userId')));
-  const { userData } = useContext(authContext);
-  const localData = JSON.parse(userData);
-  // console.log("LOcall", JSON.parse(userData));
+  const { userData, setUserData } = useContext(authContext);
+  const localData = userData ? JSON.parse(userData) : null;
   const { cart } = useContext(authContext);
 
-  // useEffect(()=>{
-  //   localData
-  // },[])
+  const handleLogout = () => {
+    localStorage.removeItem('userData');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
+    setUserData(null);
+    navigate('/login');
+  };
 
   return (
     <>
@@ -49,15 +49,28 @@ function Header() {
                 <span className="cart-badge">{cart.length}</span>
               </Nav.Link>
 
-              {localData ?(
-                <Nav.Link onClick={() => navigate('/userdashboard')} className="username-link">
-                  {localData.username}
+              {localData ? (
+                <NavDropdown 
+                  title={localData.username.toUpperCase()} 
+                  id="user-dropdown" 
+                  className="username-dropdown"
+                >
+                  <NavDropdown.Item onClick={() => navigate('/userdashboard')}>Dashboard</NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => navigate('/orders')}>Orders</NavDropdown.Item>
+                  {localData.role === 'admin' && (
+                    <>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item onClick={() => navigate('/admin')}>Admin Panel</NavDropdown.Item>
+                    </>
+                  )}
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <Nav.Link onClick={() => navigate('/login')} className="login-link">
+                  Login / Register
                 </Nav.Link>
-             ):(
-
-              <Nav.Link onClick={() => navigate('/login')} className="login-link">
-                Login / Register
-              </Nav.Link> )}
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
