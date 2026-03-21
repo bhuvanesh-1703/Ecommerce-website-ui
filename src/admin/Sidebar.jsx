@@ -17,7 +17,7 @@ const Sidebar = () => {
     const navigate = useNavigate()
 
     return (
-        <div className="sidebar">
+        <div className="admin-sidebar">
             <h2>Ours</h2>
 
 

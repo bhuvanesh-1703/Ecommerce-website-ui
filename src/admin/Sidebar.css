@@ -1,4 +1,4 @@
-.sidebar {
+.admin-sidebar {
     width: var(--admin-sidebar-width);
     height: 100vh;
     background-color: var(--admin-brand);

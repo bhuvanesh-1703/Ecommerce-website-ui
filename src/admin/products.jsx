@@ -299,7 +299,7 @@ const Products = () => {
                   <td className="price-cell">₹{p.price}</td>
                   <td>{p.stock}</td>
                   <td>
-                    <span className={`status-badge ${p.status?.toLowerCase()}`}>
+                    <span className={`admin-status-badge ${p.status?.toLowerCase()}`}>
                       {p.status}
                     </span>
                   </td>

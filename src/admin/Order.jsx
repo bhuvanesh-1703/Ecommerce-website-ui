@@ -103,7 +103,7 @@ const Order = () => {
                 <td className="price-cell">₹{order.totalPrice}</td>
                 <td>{new Date(order.date).toLocaleDateString()}</td>
                 <td>
-                  <span className={`status-badge ${order.status?.toLowerCase()}`}>
+                  <span className={`admin-status-badge ${order.status?.toLowerCase()}`}>
                     {order.status}
                   </span>
                 </td>

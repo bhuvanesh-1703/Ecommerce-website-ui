@@ -1,4 +1,4 @@
-.header {
+.admin-header {
     height: var(--admin-header-height);
     background-color: var(--admin-bg-surface);
     padding: 0 40px;

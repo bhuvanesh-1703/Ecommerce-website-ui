@@ -196,12 +196,12 @@ const Users = () => {
                   <td>{user.email}</td>
                   <td>{user.phonenumber}</td>
                   <td>
-                    <span className={`role-badge ${user.role}`}>
+                    <span className={`admin-role-badge ${user.role}`}>
                       {user.role}
                     </span>
                   </td>
                   <td>
-                    <span className={`status-badge ${user.status}`}>
+                    <span className={`admin-status-badge ${user.status}`}>
                       {user.status.toUpperCase().slice(0, 1) + user.status.slice(1)}
                     </span>
                   </td>

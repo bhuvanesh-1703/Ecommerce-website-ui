@@ -95,7 +95,7 @@
 }
 
 /* Badges */
-.status-badge, .role-badge {
+.admin-status-badge, .admin-role-badge {
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.75rem;
@@ -103,27 +103,27 @@
   text-transform: uppercase;
 }
 
-.status-badge.approved, .status-badge.active {
+.admin-status-badge.approved, .admin-status-badge.active {
   background-color: #d1fae5;
   color: #065f46;
 }
 
-.status-badge.pending {
+.admin-status-badge.pending {
   background-color: #fef3c7;
   color: #92400e;
 }
 
-.status-badge.rejected {
+.admin-status-badge.rejected {
   background-color: #fee2e2;
   color: #991b1b;
 }
 
-.role-badge.admin {
+.admin-role-badge.admin {
   background-color: var(--admin-brand-light);
   color: var(--admin-brand);
 }
 
-.role-badge.customer {
+.admin-role-badge.customer {
   background-color: #e0f2fe;
   color: #075985;
 }
