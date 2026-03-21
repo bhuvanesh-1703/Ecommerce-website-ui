@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { API_URL } from '../config';
-import '../css/order.css';
-import { FiMapPin, FiTruck } from 'react-icons/fi';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { API_URL } from "../config";
+import "../css/order.css";
+import { FiMapPin, FiTruck } from "react-icons/fi";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -14,17 +14,16 @@ const Orders = () => {
       const storedUser = JSON.parse(localStorage.getItem("userId"));
       const currentUserId = storedUser._id;
 
-      console.log(storedUser)
-      
-      console.log(currentUserId)
+      console.log(storedUser);
+
+      console.log(currentUserId);
 
       const userOrders = response.data.data.filter(
-        order => order.userId._id.toString() === currentUserId
+        (order) => order.userId._id.toString() === currentUserId,
       );
 
       setOrders(userOrders);
       console.log(userOrders);
-      
     } catch (error) {
       console.error("fetching orders:", error);
     }
@@ -45,7 +44,6 @@ const Orders = () => {
           <div className="orders-list">
             {orders.map((order, index) => (
               <div key={order._id || index} className="order-card">
-                
                 <div className="order-header">
                   <span className="order-date">
                     {new Date(order.date).toLocaleDateString()}
@@ -54,18 +52,21 @@ const Orders = () => {
 
                 <div className="order-detail">
                   <div className="order-info">
-                    <h3 className="order-title"  style={{color:"black"}}>
-                    Product Name:     <strong  style={{color:"#56021f"}}>{order.products?.[0].productId.productname || 'Product'}</strong>
-                    
+                    <h3 className="order-title" style={{ color: "black" }}>
+                      Product Name:{" "}
+                      <strong style={{ color: "#56021f" }}>
+                        {order.products?.[0].productId.productname || "Product"}
+                      </strong>
                     </h3>
 
                     <p className="order-text">
-                      <FiMapPin size={14} style={{marginRight:"2px"}}/> 
-                       {order.deliveryAddress.city}, {order.deliveryAddress.state}
+                      <FiMapPin size={14} style={{ marginRight: "2px" }} />
+                      {order.deliveryAddress.city},{" "}
+                      {order.deliveryAddress.state}
                     </p>
 
-                    <p className="order-text" >
-                      <FiTruck size={14} style={{marginRight:"2px"}} />
+                    <p className="order-text">
+                      <FiTruck size={14} style={{ marginRight: "2px" }} />
                       {order.paymentMethod}
                     </p>
 
@@ -78,11 +79,8 @@ const Orders = () => {
                     </p>
                   </div>
 
-                  <div className="order-price">
-                    ₹{order.totalPrice}
-                  </div>
+                  <div className="order-price">₹{order.totalPrice}</div>
                 </div>
-
               </div>
             ))}
           </div>

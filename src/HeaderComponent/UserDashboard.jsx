@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Orders from "../UserDashboard/Orders";
 import "../css/userDashboard.css";
-import { FiBox, FiLogOut } from "react-icons/fi"; 
+import { FiBox, FiLogOut } from "react-icons/fi";
 
 const UserDashboard = () => {
   const [userName, setUserName] = useState(null);
@@ -48,7 +48,6 @@ const UserDashboard = () => {
           className="dashboard-content"
           style={{ textAlign: "center", maxWidth: "400px" }}
         >
-        
           <p>Please log in </p>
           <button
             className="sidebar-nav-item active"
@@ -75,7 +74,7 @@ const UserDashboard = () => {
       <div className="dashboard-sidebar">
         <div className="sidebar-header">
           <h2>Dashboard</h2>
-          <p style={{ fontSize: "0.85rem", color:'#56021f' }}>
+          <p style={{ fontSize: "0.85rem", color: "#56021f" }}>
             Welcome back, {userName.username}
           </p>
         </div>

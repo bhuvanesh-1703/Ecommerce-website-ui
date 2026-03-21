@@ -6,7 +6,6 @@ import { authContext } from "../App";
 import { API_URL } from "../config";
 import "../css/orderconfirm.css";
 
-
 const Checkout = () => {
   const [total, setTotal] = useState(0);
   const [shippingCharge, setShippingCharge] = useState(0);
@@ -18,7 +17,7 @@ const Checkout = () => {
     phonenumber: "",
     city: "",
     pincode: "",
-    state: ""
+    state: "",
   });
   const [paymentMethod, setPaymentMethod] = useState("");
 
@@ -30,7 +29,6 @@ const Checkout = () => {
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
   };
 
-
   const getCartTotal = async () => {
     try {
       const storedUser = localStorage.getItem("userId");
@@ -38,9 +36,8 @@ const Checkout = () => {
 
       const res = await axios.get(`${API_URL}/cart?userId=${userId}`);
 
-
       const validItems = res.data.data.filter(
-        item => item.productId !== null
+        (item) => item.productId !== null,
       );
 
       let sum = 0;
@@ -52,8 +49,6 @@ const Checkout = () => {
       setQty(validItems.reduce((acc, item) => acc + item.quantity, 0));
       setShippingCharge(sum >= 499 ? 0 : 30);
       setTotal(sum);
-
-
     } catch (error) {
       console.log("Failed to fetch cart total", error);
     }
@@ -62,7 +57,6 @@ const Checkout = () => {
   useEffect(() => {
     getCartTotal();
   }, []);
-
 
   const handleConfirmOrder = async () => {
     if (
@@ -83,10 +77,10 @@ const Checkout = () => {
     }
 
     try {
-      const products = cartItems.map(item => ({
+      const products = cartItems.map((item) => ({
         productId: item.productId._id,
         quantity: item.quantity,
-        price: item.productId.price
+        price: item.productId.price,
       }));
 
       const userData = localStorage.getItem("userId");
@@ -99,35 +93,32 @@ const Checkout = () => {
         totalPrice: total,
         shippingCharge,
         qty,
-        paymentMethod
+        paymentMethod,
       };
 
       await axios.post(`${API_URL}/admin/order`, orderData);
 
-      Swal.fire("Success", "Order placed successfully!", "success").then(() => {
+      Swal.fire("Success", "Order placed successfully!", "success").then(
+        () => {},
+      );
 
-      });
-
-     
       for (let i = 0; i < cartItems.length; i++) {
         const item = cartItems[i];
         await axios.delete(`${API_URL}/cart/${item._id}`);
       }
 
-      setCart([]); 
+      setCart([]);
 
       await axios.post(`${API_URL}/ordersuccessmail`, {
         toMail: parsedUser.email,
         order: {
           email: parsedUser.email,
-          productname: cartItems.map(i => i.productId.productname).join(", ")
-        }
-
-      })
+          productname: cartItems.map((i) => i.productId.productname).join(", "),
+        },
+      });
 
       navigate("/");
       setCartItems([]);
-
     } catch (error) {
       Swal.fire("Error", "Failed to place order", "error");
       console.error(error);
@@ -141,39 +132,100 @@ const Checkout = () => {
       <div style={{ display: "flex", marginTop: "5%", marginBottom: "5%" }}>
         <div className="cont">
           <h4>Delivery Address</h4>
-          <input name="fullname" placeholder="Fullname" value={userDetails.fullname.toUpperCase()} onChange={handleChange} />
-          <input name="address" placeholder="Address" value={userDetails.address.toUpperCase()} onChange={handleChange} />
-          <input name="phonenumber" maxLength={10} placeholder="Phonenumber" value={userDetails.phonenumber} onChange={handleChange} />
-          <input name="city" placeholder="City" value={userDetails.city.toUpperCase()} onChange={handleChange} />
-          <input type="number" name="pincode" placeholder="Pincode" value={userDetails.pincode} onChange={handleChange} />
-          <input name="state" placeholder="State" value={userDetails.state.toUpperCase()} onChange={handleChange} />
+          <input
+            name="fullname"
+            placeholder="Fullname"
+            value={userDetails.fullname.toUpperCase()}
+            onChange={handleChange}
+          />
+          <input
+            name="address"
+            placeholder="Address"
+            value={userDetails.address.toUpperCase()}
+            onChange={handleChange}
+          />
+          <input
+            name="phonenumber"
+            maxLength={10}
+            placeholder="Phonenumber"
+            value={userDetails.phonenumber}
+            onChange={handleChange}
+          />
+          <input
+            name="city"
+            placeholder="City"
+            value={userDetails.city.toUpperCase()}
+            onChange={handleChange}
+          />
+          <input
+            type="number"
+            name="pincode"
+            placeholder="Pincode"
+            value={userDetails.pincode}
+            onChange={handleChange}
+          />
+          <input
+            name="state"
+            placeholder="State"
+            value={userDetails.state.toUpperCase()}
+            onChange={handleChange}
+          />
         </div>
 
         <div>
           <div className="summary">
             <h4>Order Summary</h4>
-            <p>Shipping charge: <strong style={{ color: "green" }}>₹ {shippingCharge === 0 ? "Free" : shippingCharge}</strong></p>
-            <p>Quantity: <strong >{qty}</strong></p>
+            <p>
+              Shipping charge:{" "}
+              <strong style={{ color: "green" }}>
+                ₹ {shippingCharge === 0 ? "Free" : shippingCharge}
+              </strong>
+            </p>
+            <p>
+              Quantity: <strong>{qty}</strong>
+            </p>
 
-            <p>Total Amount: <strong>₹ {total + shippingCharge}</strong></p>
+            <p>
+              Total Amount: <strong>₹ {total + shippingCharge}</strong>
+            </p>
           </div>
 
           <div className="payment-option">
             <h4>Payment Options</h4>
             <label>
-              <input type="radio" value="Gpay" name="payment" onChange={(e) => setPaymentMethod(e.target.value)} />
+              <input
+                type="radio"
+                value="Gpay"
+                name="payment"
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
               G pay
             </label>
             <label>
-              <input type="radio" value="PhonePe" name="payment" onChange={(e) => setPaymentMethod(e.target.value)} />
+              <input
+                type="radio"
+                value="PhonePe"
+                name="payment"
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
               PhonePe
             </label>
             <label>
-              <input type="radio" value="Paytm" name="payment" onChange={(e) => setPaymentMethod(e.target.value)} />
+              <input
+                type="radio"
+                value="Paytm"
+                name="payment"
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
               Paytm
             </label>
             <label>
-              <input type="radio" value="COD" name="payment" onChange={(e) => setPaymentMethod(e.target.value)} />
+              <input
+                type="radio"
+                value="COD"
+                name="payment"
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              />
               Cash On Delivery
             </label>
           </div>

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { API_URL } from '../config';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { API_URL } from "../config";
 import { MdOutlineCancel } from "react-icons/md";
-import Swal from 'sweetalert2';
-import '../css/cart.css';
-import { useNavigate } from 'react-router-dom';
+import Swal from "sweetalert2";
+import "../css/cart.css";
+import { useNavigate } from "react-router-dom";
 import { LuIndianRupee } from "react-icons/lu";
 
 const AddCart = () => {
@@ -15,23 +15,22 @@ const AddCart = () => {
 
   const getCart = async () => {
     try {
-      const storedUser = JSON.parse(localStorage.getItem('userId'));
+      const storedUser = JSON.parse(localStorage.getItem("userId"));
       const userId = storedUser._id;
-      console.log("userId",userId);
-      
+      console.log("userId", userId);
 
       const response = await axios.get(`${API_URL}/cart?userId=${userId}`);
 
       const validItems = response.data.data.filter(
-        item => item.productId !== null
+        (item) => item.productId !== null,
       );
 
       setCartItems(validItems);
       console.log(validItems);
-      
+
       calculateTotal(validItems);
     } catch (error) {
-      console.log('Failed to fetch cart', error);
+      console.log("Failed to fetch cart", error);
     }
   };
 
@@ -48,7 +47,7 @@ const AddCart = () => {
 
   const calculateTotal = (cart) => {
     let sum = 0;
-    cart.forEach(item => {
+    cart.forEach((item) => {
       if (item.productId) {
         sum += item.productId.price * item.quantity;
       }
@@ -73,7 +72,7 @@ const AddCart = () => {
           icon: "success",
           title: "Product deleted successfully",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
       }
     });
@@ -111,14 +110,22 @@ const AddCart = () => {
                   />
                 </td>
 
-                <td>{pro.productId.productname.toUpperCase()  }</td>
+                <td>{pro.productId.productname.toUpperCase()}</td>
 
                 <td>
                   <div className="qty-controls">
-                    <button onClick={() => handleQtyChange(pro._id, pro.quantity - 1)}>-</button>
+                    <button
+                      onClick={() => handleQtyChange(pro._id, pro.quantity - 1)}
+                    >
+                      -
+                    </button>
 
                     <input type="number" value={pro.quantity} readOnly />
-                    <button onClick={() => handleQtyChange(pro._id, pro.quantity + 1)}>+</button>
+                    <button
+                      onClick={() => handleQtyChange(pro._id, pro.quantity + 1)}
+                    >
+                      +
+                    </button>
                   </div>
                 </td>
 
@@ -139,9 +146,11 @@ const AddCart = () => {
 
       {cartItems.length > 0 && (
         <div className="cart-total">
-          <h3>Total Amount: <LuIndianRupee size={25} /> {total}</h3>
+          <h3>
+            Total Amount: <LuIndianRupee size={25} /> {total}
+          </h3>
           <button
-            onClick={() => navigate('/userdetails')}
+            onClick={() => navigate("/userdetails")}
             className="continue-btn"
           >
             Check Out
