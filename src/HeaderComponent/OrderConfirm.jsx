@@ -33,7 +33,10 @@ const Checkout = () => {
 
   const getCartTotal = async () => {
     try {
-      const res = await axios.get("http://localhost:5100/cart");
+      const storedUser = localStorage.getItem("userId");
+      const userId = JSON.parse(storedUser)._id || JSON.parse(storedUser);
+
+      const res = await axios.get(`http://localhost:5100/cart?userId=${userId}`);
 
 
       const validItems = res.data.data.filter(

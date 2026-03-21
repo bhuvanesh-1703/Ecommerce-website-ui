@@ -14,9 +14,7 @@ import { authContext } from '../App';
 
 function Header() {
   const navigate = useNavigate();
-
   // const [localData] = useState(JSON.parse(localStorage.getItem('userId')));
-
   const { userData } = useContext(authContext);
   const localData = JSON.parse(userData);
   // console.log("LOcall", JSON.parse(userData));

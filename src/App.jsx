@@ -17,6 +17,14 @@ import axios from 'axios'
 import AddCart from './HeaderComponent/AddCart'
 import UserDashboard from './HeaderComponent/UserDashboard'
 import Orders from './UserDashboard/Orders'
+import MainLayout from './components/MainLayout';
+import AdminLayout from './admin/AdminLayout';
+import AdminDashboard from './admin/Dashbaord';
+import AdminUsers from './admin/users';
+import AdminCategory from './admin/Category';
+import AdminProducts from './admin/products';
+import AdminOrder from './admin/Order';
+import AdminMessages from './admin/Messages';
 
 export const authContext = createContext();
 
@@ -42,12 +50,8 @@ function App() {
 
   const getCart = async () => {
     try {
-      const userId = localStorage.getItem('userId');
-      if (!userId) {
-        setCart([]);
-
-        return;
-      }
+      const storedUser = localStorage.getItem('userId');
+      const userId = JSON.parse(storedUser)._id || JSON.parse(storedUser);
 
       const response = await axios.get(`http://localhost:5100/cart?userId=${userId}`);
 
@@ -71,24 +75,33 @@ function App() {
     <>
       <BrowserRouter>
         <authContext.Provider value={{ userData, setUserData, cart, setCart }}>
-          <Header />
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/contact' element={<Contact />} />
-            <Route path='/aboutus' element={<AboutUs />} />
-            <Route path='/cart' element={<AddCart />} />
-            <Route path='/products' element={<Product />} />
-            <Route path='/product/:product_id' element={<ProductDetails />} />
-            <Route path='/login' element={<SignIn />} />
-            <Route path='/payment' element={<Payment />} />
-            <Route path='/register' element={<SignUp />} />
-            <Route path='/userdetails' element={<UserDetails />} />
-            <Route path='/userdashboard' element={<UserDashboard />} />
+            <Route element={<MainLayout />}>
+              <Route path='/' element={<Home />} />
+              <Route path='/contact' element={<Contact />} />
+              <Route path='/aboutus' element={<AboutUs />} />
+              <Route path='/cart' element={<AddCart />} />
+              <Route path='/products' element={<Product />} />
+              <Route path='/product/:product_id' element={<ProductDetails />} />
+              <Route path='/login' element={<SignIn />} />
+              <Route path='/payment' element={<Payment />} />
+              <Route path='/register' element={<SignUp />} />
+              <Route path='/userdetails' element={<UserDetails />} />
+              <Route path='/userdashboard' element={<UserDashboard />} />
+              <Route path='/orders' element={<Orders />} />
+            </Route>
 
-            <Route path='/orders' element={<Orders />} />
-
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="category" element={<AdminCategory />} />
+              <Route path="product" element={<AdminProducts />} />
+              <Route path="order" element={<AdminOrder />} />
+              <Route path="messages" element={<AdminMessages />} />
+              <Route path="product/:id" element={<AdminProducts />} />
+            </Route>
           </Routes>
-          <Footer />
         </authContext.Provider>
       </BrowserRouter>
     </>
@@ -96,3 +109,5 @@ function App() {
 }
 
 export default App
+
+

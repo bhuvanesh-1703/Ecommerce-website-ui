@@ -24,7 +24,7 @@ const SignIn = () => {
 
     const localhosts = async () => {
         const response = await axios.post('http://localhost:5100')
-        console.log(response.data);
+       // console.log(response.data);
         setLocalHost(localStorage.getItem('token'))
     }
 
@@ -44,8 +44,8 @@ const SignIn = () => {
             setUserData(JSON.stringify(response.data.data.userData));
             localStorage.setItem("userId", JSON.stringify(response.data.data.userData));
             localStorage.setItem("token", JSON.stringify(response.data.data.token));
+           
             navigate('/')
-
             setInput({ email: "", password: "" });
         } catch (error) {
             Swal.fire({
