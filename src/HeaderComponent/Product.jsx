@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../css/Product.css";
+import "../css/product.css";
 import { useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
