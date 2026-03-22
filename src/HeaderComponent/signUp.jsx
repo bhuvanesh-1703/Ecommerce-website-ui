@@ -14,7 +14,7 @@ const SignUp = () => {
         phonenumber: "",
         password: "",
         confirmpassword: "",
-        role:"admin"
+        role: "user"
     });
 
     const [errMsg, setErrMsg] = useState('');
@@ -23,12 +23,10 @@ const SignUp = () => {
         setInput({ ...input, [e.target.name]: e.target.value });
     };
 
-
-
     const handleSignUp = async (e) => {
         e.preventDefault();
 
-        const { username, email, phonenumber, password, confirmpassword } = input;
+        const { username, email, phonenumber, password, confirmpassword, role } = input;
 
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const phonenumberRegex = /^\d{10}$/;
@@ -62,7 +60,8 @@ const SignUp = () => {
                 username,
                 email,
                 phonenumber,
-                password
+                password,
+                role
             });
 
             if (response.data.success) {
@@ -77,7 +76,8 @@ const SignUp = () => {
                     email: "",
                     phonenumber: "",
                     password: "",
-                    confirmpassword: ""
+                    confirmpassword: "",
+                    role: "user"
                 });
                 await axios.post(`${API_URL}/registersuccessmail`, {
                     toMail: email,
@@ -102,6 +102,12 @@ const SignUp = () => {
                 <input type="text" placeholder='Phone Number' name='phonenumber' value={input.phonenumber} onChange={handleChange} maxLength={10} />
                 <input type="password" placeholder='Password' name='password' value={input.password} onChange={handleChange} />
                 <input type="password" placeholder='Confirm Password' name='confirmpassword' value={input.confirmpassword} onChange={handleChange} />
+                
+                <select name='role' value={input.role} onChange={handleChange} style={{ padding: '10px', marginBottom: '10px', borderRadius: '4px' }}>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+
                 <button type="submit">Submit</button>
 
                 {errMsg && <p style={{ color: "red", textAlign: "center" }}>{errMsg}</p>}
